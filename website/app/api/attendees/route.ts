@@ -281,11 +281,13 @@ async function startOpenAIScoring() {
     return;
   }
 
-  console.log(`Scoring ${attendeesToScore.length} candidates with OpenAI in parallel...`);
+  console.log(`Scoring ${attendeesToScore.length} candidates with OpenAI...`);
 
-  // Score all candidates in parallel (much faster!)
-  const scoringPromises = attendeesToScore.map(async ({ attendee, index }) => {
-    console.log(`Started scoring: ${attendee.name}`);
+  // Score each candidate sequentially
+  for (let i = 0; i < attendeesToScore.length; i++) {
+    const { attendee, index } = attendeesToScore[i];
+
+    console.log(`Scoring ${i + 1}/${attendeesToScore.length}: ${attendee.name}`);
 
     try {
       const result: ScoringResult = await scoreCandidate(attendee.linkedinData!);
@@ -303,27 +305,28 @@ async function startOpenAIScoring() {
         attendee.scoringStatus = 'completed';
 
         storedAttendees.scoringProgress.completed++;
-        storedAttendees.scoringProgress.pending--;
         console.log(`✓ Scored ${attendee.name}: ${evaluation.overall_score}/100 (Tech: ${evaluation.technical_skill}, Collab: ${evaluation.collaboration})`);
       } else {
         // Failed to score
         attendee.scoringStatus = 'failed';
         attendee.scoringError = result.error || 'Unknown scoring error';
         storedAttendees.scoringProgress.failed++;
-        storedAttendees.scoringProgress.pending--;
         console.log(`✗ Failed to score ${attendee.name}: ${result.error}`);
       }
     } catch (error) {
       attendee.scoringStatus = 'failed';
       attendee.scoringError = error instanceof Error ? error.message : 'Unknown error';
       storedAttendees.scoringProgress.failed++;
-      storedAttendees.scoringProgress.pending--;
       console.log(`✗ Error scoring ${attendee.name}:`, error);
     }
-  });
 
-  // Wait for all scoring requests to complete
-  await Promise.all(scoringPromises);
+    storedAttendees.scoringProgress.pending--;
+
+    // Rate limiting: 1 second delay between API calls (except after the last one)
+    if (i < attendeesToScore.length - 1) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+  }
 
   console.log('OpenAI scoring completed!');
   console.log(
