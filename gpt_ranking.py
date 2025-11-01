@@ -6,14 +6,13 @@ import time
 client = OpenAI(api_key="")
 
 class HackathonEvaluation(BaseModel):
-    university: str = Field(description="University name")
-    course: str = Field(description="Degree or major")
-    work_experience_count: int = Field(description="Total number of internships and jobs")
     hackathons_won: Union[int, str] = Field(description="Number of hackathons won, or 'unavailable' if not mentioned")
     technical_skill: int = Field(ge=1, le=100, description="Technical skill score 1-100")
+    technical_skill_summary: str = Field(description="Paragraph summary of technıcal skılls if overall_score > 75 or under 20, otherwise empty string")
     collaboration: int = Field(ge=1, le=100, description="Collaboration score 1-100")
+    collaboration_summary: str = Field(description="Paragraph summary if overall_score > 75 or under 20, otherwise empty string")
     overall_score: int = Field(ge=1, le=100, description="Overall hackathon readiness score 1-100")
-    summary: str = Field(description="Paragraph summary if overall_score > 75, otherwise empty string")
+    summary: str = Field(description="Paragraph summary if overall_score > 75 or under 20, otherwise empty string")
 
 def score_candidate(profile_text):
     prompt = f"""Analyze this LinkedIn profile to evaluate hackathon partnership potential.
@@ -23,17 +22,15 @@ Profile:
 
 Extract and score:
 
-1. Education: university name and degree/course
-2. Work experience: count all internships + jobs
-3. Hackathons won: count if mentioned, otherwise use "unavailable"
-4. Scores (1-100 scale with percentile calibration):
+1. Hackathons won: count if mentioned, otherwise use "unavailable"
+2. Scores (1-100 scale with percentile calibration):
    - Technical Skill: Depth of technical projects, languages, frameworks, system design
    - Collaboration: Teamwork indicators, leadership roles, group projects, communication ability
    - Overall: Holistic hackathon readiness combining technical + collaboration + execution track record
 
 CALIBRATION: Population of university students where median = 50, top 10% = 80+, exceptional = 90+. Distribute scores across 40-70 range for most candidates. Only truly exceptional profiles score 85+. Avoid clustering around 70-80.
 
-5. Summary: If overall_score > 75, write one paragraph (3-4 sentences) summarizing interests and background. Otherwise, leave empty string."""
+3. Summary: If overall_score > 75 or under 20, write one paragraph (3-4 sentences) summarizing interests and background. Otherwise, leave empty string."""
 
     response = client.chat.completions.parse(
         model="gpt-5-nano",

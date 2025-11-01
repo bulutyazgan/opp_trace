@@ -53,6 +53,17 @@ interface Attendee {
   linkedinData?: LinkedInProfile | null;
   scrapingStatus?: 'pending' | 'completed' | 'failed' | 'no_linkedin';
   scrapingError?: string;
+
+  // OpenAI scoring data
+  hackathons_won?: number | string | null;
+  technical_skill?: number | null;
+  technical_skill_summary?: string | null;
+  collaboration?: number | null;
+  collaboration_summary?: string | null;
+  overall_score?: number | null;
+  summary?: string | null;
+  scoringStatus?: 'pending' | 'completed' | 'failed' | 'skipped';
+  scoringError?: string;
 }
 
 interface AttendeeData {
@@ -65,6 +76,13 @@ interface AttendeeData {
     completed: number;
     pending: number;
     failed: number;
+  };
+  scoringProgress?: {
+    total: number;
+    completed: number;
+    pending: number;
+    failed: number;
+    skipped: number;
   };
 }
 
@@ -116,7 +134,12 @@ export default function Dashboard() {
     if (!data || !data.attendees || data.attendees.length === 0) return;
 
     const rows = [
-      ['Name', 'Profile URL', 'Events Attended', 'Instagram', 'X', 'TikTok', 'LinkedIn', 'Website', 'Headline', 'About', 'Scraping Status']
+      [
+        'Name', 'Profile URL', 'Events Attended', 'Instagram', 'X', 'TikTok', 'LinkedIn', 'Website',
+        'Headline', 'About', 'Scraping Status',
+        'Overall Score', 'Technical Skill', 'Collaboration', 'Hackathons Won',
+        'Technical Skill Summary', 'Collaboration Summary', 'Summary', 'Scoring Status'
+      ]
     ];
 
     for (const attendee of data.attendees) {
@@ -131,7 +154,15 @@ export default function Dashboard() {
         attendee.website || '',
         attendee.linkedinData?.headline || '',
         attendee.linkedinData?.about || '',
-        attendee.scrapingStatus || ''
+        attendee.scrapingStatus || '',
+        attendee.overall_score?.toString() || '',
+        attendee.technical_skill?.toString() || '',
+        attendee.collaboration?.toString() || '',
+        attendee.hackathons_won?.toString() || '',
+        attendee.technical_skill_summary || '',
+        attendee.collaboration_summary || '',
+        attendee.summary || '',
+        attendee.scoringStatus || ''
       ]);
     }
 
@@ -163,9 +194,16 @@ export default function Dashboard() {
     );
   }
 
-  const attendees = data?.attendees || [];
+  // Sort attendees by overall_score descending (highest first)
+  const attendees = (data?.attendees || []).sort((a, b) => {
+    const scoreA = a.overall_score ?? -1;
+    const scoreB = b.overall_score ?? -1;
+    return scoreB - scoreA;
+  });
+
   const hasData = attendees.length > 0;
   const progress = data?.scrapingProgress;
+  const scoringProgress = data?.scoringProgress;
 
   return (
     <div className={styles.container}>
@@ -203,6 +241,29 @@ export default function Dashboard() {
         </div>
       )}
 
+      {/* OpenAI Scoring Progress */}
+      {scoringProgress && scoringProgress.total > 0 && (
+        <div className={styles.progressSection}>
+          <h3>OpenAI Scoring Progress</h3>
+          <div className={styles.progressBar}>
+            <div
+              className={styles.progressFill}
+              style={{
+                width: `${(scoringProgress.completed / scoringProgress.total) * 100}%`,
+                backgroundColor: scoringProgress.pending > 0 ? '#9c27b0' : '#673ab7'
+              }}
+            />
+          </div>
+          <div className={styles.progressStats}>
+            <span className={styles.progressCompleted}>✓ {scoringProgress.completed} scored</span>
+            <span className={styles.progressPending}>⏳ {scoringProgress.pending} pending</span>
+            <span className={styles.progressFailed}>✗ {scoringProgress.failed} failed</span>
+            <span className={styles.progressPending}>⊘ {scoringProgress.skipped} skipped</span>
+            <span className={styles.progressTotal}>Total: {scoringProgress.total}</span>
+          </div>
+        </div>
+      )}
+
       {!hasData ? (
         <div className={styles.noData}>
           <h2>No attendee data yet</h2>
@@ -230,6 +291,13 @@ export default function Dashboard() {
                   <th>Events</th>
                   <th>LinkedIn</th>
                   <th>Status</th>
+                  <th>Overall</th>
+                  <th>Tech</th>
+                  <th>Collab</th>
+                  <th>Hackathons</th>
+                  <th>Tech Summary</th>
+                  <th>Collab Summary</th>
+                  <th>Summary</th>
                   <th>Socials</th>
                 </tr>
               </thead>
@@ -289,6 +357,38 @@ export default function Dashboard() {
                           <div className={styles.error}>{attendee.scrapingError}</div>
                         )}
                       </td>
+                      {/* Scoring columns */}
+                      <td className={styles.scoreCell}>
+                        {attendee.overall_score !== null && attendee.overall_score !== undefined ? (
+                          <span className={styles.scoreValue}>{attendee.overall_score}</span>
+                        ) : attendee.scoringStatus === 'pending' ? (
+                          <span className={styles.loading}>...</span>
+                        ) : '-'}
+                      </td>
+                      <td className={styles.scoreCell}>
+                        {attendee.technical_skill !== null && attendee.technical_skill !== undefined ? (
+                          <span className={styles.scoreValue}>{attendee.technical_skill}</span>
+                        ) : '-'}
+                      </td>
+                      <td className={styles.scoreCell}>
+                        {attendee.collaboration !== null && attendee.collaboration !== undefined ? (
+                          <span className={styles.scoreValue}>{attendee.collaboration}</span>
+                        ) : '-'}
+                      </td>
+                      <td>
+                        {attendee.hackathons_won !== null && attendee.hackathons_won !== undefined
+                          ? attendee.hackathons_won
+                          : '-'}
+                      </td>
+                      <td className={styles.summaryCell}>
+                        {attendee.technical_skill_summary || '-'}
+                      </td>
+                      <td className={styles.summaryCell}>
+                        {attendee.collaboration_summary || '-'}
+                      </td>
+                      <td className={styles.summaryCell}>
+                        {attendee.summary || '-'}
+                      </td>
                       <td className={styles.socials}>
                         {attendee.instagram && <a href={attendee.instagram} target="_blank" rel="noopener noreferrer">IG</a>}
                         {attendee.x && <a href={attendee.x} target="_blank" rel="noopener noreferrer">X</a>}
@@ -300,7 +400,7 @@ export default function Dashboard() {
                     {/* Expanded Row Details */}
                     {expandedRows.has(index) && attendee.linkedinData && (
                       <tr key={`${index}-expanded`} className={styles.expandedContent}>
-                        <td colSpan={8}>
+                        <td colSpan={15}>
                           <div className={styles.detailsContainer}>
                             {/* About */}
                             {attendee.linkedinData.about && (
@@ -360,24 +460,29 @@ export default function Dashboard() {
                               </div>
                             )}
 
-                            {/* Activities */}
-                            {attendee.linkedinData.activities && attendee.linkedinData.activities.length > 0 && (
-                              <div className={styles.detailSection}>
-                                <h4>Recent Activity ({attendee.linkedinData.activities.length})</h4>
-                                {attendee.linkedinData.activities.slice(0, 3).map((activity, i) => (
-                                  <div key={i} className={styles.activityItem}>
-                                    <a href={activity.link} target="_blank" rel="noopener noreferrer">
-                                      {activity.title.substring(0, 100)}{activity.title.length > 100 ? '...' : ''}
-                                    </a>
-                                    <br />
-                                    <span className={styles.meta}>{activity.activity}</span>
-                                  </div>
-                                ))}
-                                {attendee.linkedinData.activities.length > 3 && (
-                                  <p className={styles.more}>+ {attendee.linkedinData.activities.length - 3} more activities</p>
-                                )}
-                              </div>
-                            )}
+                            {/* Activities - Show only "Shared by" activities */}
+                            {attendee.linkedinData.activities && attendee.linkedinData.activities.length > 0 && (() => {
+                              const sharedActivities = attendee.linkedinData.activities.filter(
+                                activity => activity.activity && activity.activity.startsWith('Shared by')
+                              );
+
+                              if (sharedActivities.length === 0) return null;
+
+                              return (
+                                <div className={styles.detailSection}>
+                                  <h4>Recent Activity - Shared Posts ({sharedActivities.length} total)</h4>
+                                  {sharedActivities.map((activity, i) => (
+                                    <div key={i} className={styles.activityItem}>
+                                      <a href={activity.link} target="_blank" rel="noopener noreferrer">
+                                        {activity.title}
+                                      </a>
+                                      <br />
+                                      <span className={styles.meta}>{activity.activity}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              );
+                            })()}
                           </div>
                         </td>
                       </tr>

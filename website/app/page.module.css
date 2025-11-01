@@ -405,3 +405,32 @@
   color: #999;
   font-style: italic;
 }
+
+/* Scoring Columns */
+.scoreCell {
+  text-align: center;
+  font-weight: 600;
+}
+
+.scoreValue {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.summaryCell {
+  max-width: 200px;
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.summaryCell:hover {
+  white-space: normal;
+  overflow: visible;
+}

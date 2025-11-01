@@ -113,39 +113,40 @@ function extractRelevantFields(rawData: any): LinkedInProfile {
 }
 
 /**
- * Scrapes multiple LinkedIn profiles with rate limiting and progress tracking
+ * Scrapes multiple LinkedIn profiles in parallel (much faster!)
  */
 export async function scrapeMultipleProfiles(
   urls: string[],
   apiKey: string,
   onProgress?: (completed: number, total: number, lastResult: ScrapedResult) => void
 ): Promise<ScrapedResult[]> {
-  const results: ScrapedResult[] = [];
   const validUrls = urls.filter(url => url && url.includes('linkedin.com'));
 
-  console.log(`Starting LinkedIn scraping for ${validUrls.length} profiles...`);
+  console.log(`Starting parallel LinkedIn scraping for ${validUrls.length} profiles...`);
 
-  for (let i = 0; i < validUrls.length; i++) {
-    const url = validUrls[i];
+  let completedCount = 0;
 
-    // Scrape the profile
+  // Scrape all profiles in parallel
+  const scrapingPromises = validUrls.map(async (url, index) => {
     const result = await scrapeLinkedInProfile(url, apiKey);
-    results.push(result);
+
+    // Update progress atomically
+    completedCount++;
 
     // Call progress callback
     if (onProgress) {
-      onProgress(i + 1, validUrls.length, result);
+      onProgress(completedCount, validUrls.length, result);
     }
 
     console.log(
-      `LinkedIn scraping progress: ${i + 1}/${validUrls.length} - ${url} - ${result.success ? '✓' : '✗'}`
+      `LinkedIn scraping progress: ${completedCount}/${validUrls.length} - ${url} - ${result.success ? '✓' : '✗'}`
     );
 
-    // Rate limiting: Wait 1 second between requests to avoid API limits
-    if (i < validUrls.length - 1) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-    }
-  }
+    return result;
+  });
+
+  // Wait for all scraping to complete
+  const results = await Promise.all(scrapingPromises);
 
   const successCount = results.filter(r => r.success).length;
   console.log(
