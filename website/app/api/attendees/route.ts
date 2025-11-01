@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // In-memory storage for attendee data
 // In production, this would be replaced with a database
-let storedAttendees: any[] = [];
+let storedAttendees: any = { attendees: [], count: 0 };
 
 // CORS headers
 const corsHeaders = {

@@ -164,7 +164,7 @@
 
     console.log(`Found ${attendees.length} unique attendees`);
 
-    // Helper to fetch and parse social links from a profile page
+    // Helper to fetch and parse social links and events attended from a profile page
     async function getSocialLinks(profileUrl) {
       try {
         const res = await fetch(profileUrl, { credentials: 'include' });
@@ -176,7 +176,8 @@
           x: '',
           tiktok: '',
           linkedin: '',
-          website: ''
+          website: '',
+          eventsAttended: 0
         };
         for (const a of socialLinks) {
           const href = a.href;
@@ -186,6 +187,23 @@
           else if (/linkedin\.com/i.test(href)) result.linkedin = href;
           else if (!/lumacdn\.com|lu\.ma|luma\.com/i.test(href)) result.website = href;
         }
+
+        // Extract events attended count
+        // Look for pattern: <span class="fw-medium">6</span> followed by <span>Attended</span>
+        const eventsText = Array.from(doc.querySelectorAll('span.fw-medium')).find(span => {
+          // Check next sibling element
+          const nextElement = span.nextElementSibling;
+          if (nextElement && nextElement.textContent.includes('Attended')) {
+            return true;
+          }
+          // Also check if parent contains "Attended" text nearby
+          const parentText = span.parentElement?.textContent || '';
+          return parentText.includes('Attended');
+        });
+        if (eventsText) {
+          result.eventsAttended = parseInt(eventsText.textContent.trim()) || 0;
+        }
+
         return result;
       } catch (e) {
         console.error(`Failed to fetch ${profileUrl}:`, e);
@@ -194,7 +212,8 @@
           x: '',
           tiktok: '',
           linkedin: '',
-          website: ''
+          website: '',
+          eventsAttended: 0
         };
       }
     }
@@ -229,12 +248,13 @@
 
     // 4. Build CSV rows
     const rows = [
-      ['Name', 'Profile URL', 'Instagram', 'X', 'TikTok', 'LinkedIn', 'Website']
+      ['Name', 'Profile URL', 'Events Attended', 'Instagram', 'X', 'TikTok', 'LinkedIn', 'Website']
     ];
     for (const result of results) {
       rows.push([
         result.name,
         result.profileUrl,
+        result.eventsAttended,
         result.instagram,
         result.x,
         result.tiktok,

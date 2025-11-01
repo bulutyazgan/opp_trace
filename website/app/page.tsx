@@ -6,6 +6,7 @@ import styles from './page.module.css';
 interface Attendee {
   name: string;
   profileUrl: string;
+  eventsAttended?: number;
   instagram?: string;
   x?: string;
   tiktok?: string;
@@ -58,13 +59,14 @@ export default function Dashboard() {
     if (!data || !data.attendees || data.attendees.length === 0) return;
 
     const rows = [
-      ['Name', 'Profile URL', 'Instagram', 'X', 'TikTok', 'LinkedIn', 'Website']
+      ['Name', 'Profile URL', 'Events Attended', 'Instagram', 'X', 'TikTok', 'LinkedIn', 'Website']
     ];
 
     for (const attendee of data.attendees) {
       rows.push([
         attendee.name,
         attendee.profileUrl,
+        String(attendee.eventsAttended || 0),
         attendee.instagram || '',
         attendee.x || '',
         attendee.tiktok || '',
@@ -140,6 +142,7 @@ export default function Dashboard() {
                 <tr>
                   <th>Name</th>
                   <th>Profile</th>
+                  <th>Events Attended</th>
                   <th>Instagram</th>
                   <th>X</th>
                   <th>TikTok</th>
@@ -156,6 +159,7 @@ export default function Dashboard() {
                         View Profile
                       </a>
                     </td>
+                    <td>{attendee.eventsAttended || 0}</td>
                     <td>
                       {attendee.instagram ? (
                         <a href={attendee.instagram} target="_blank" rel="noopener noreferrer">
