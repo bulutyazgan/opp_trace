@@ -1,0 +1,149 @@
+.container {
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.header {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 2rem;
+}
+
+.eventUrl {
+  color: #666;
+  margin: 0.5rem 0;
+}
+
+.eventUrl a {
+  color: #667eea;
+  text-decoration: underline;
+}
+
+.timestamp {
+  color: #999;
+  font-size: 0.9rem;
+  margin: 0.5rem 0 0 0;
+}
+
+.loading,
+.error,
+.noData {
+  background: white;
+  padding: 3rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.error {
+  color: #ef4444;
+}
+
+.noData h2 {
+  margin: 0 0 1rem 0;
+  color: #333;
+}
+
+.noData p {
+  color: #666;
+  margin: 0.5rem 0;
+}
+
+.summary {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.summary h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.summary p {
+  margin: 0.5rem 0 0 0;
+  color: #666;
+}
+
+.summary strong {
+  color: #667eea;
+  font-size: 1.2rem;
+}
+
+.downloadBtn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.downloadBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tableContainer {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead {
+  background: #f8f9fa;
+}
+
+.table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e9ecef;
+  color: #666;
+}
+
+.table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.table a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.table a:hover {
+  text-decoration: underline;
+}
