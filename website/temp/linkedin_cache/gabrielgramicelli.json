@@ -5,7 +5,10 @@
     "profile_photo": "https://static.licdn.com/aero-v1/sc/h/9c8pery4andzj6ohjkjp54ma2",
     "about": "AI/ML engineer",
     "experience": [
-      {}
+      {
+        "company_name": "Wellhub",
+        "company_image": "https://media.licdn.com/dms/image/v2/D560BAQFYnR_Zrm87Dg/company-logo_100_100/B56ZnMyVr4HUAQ-/0/1760077372453/cisco_logo?e=2147483647&v=beta&t=-FnJBwOSzJBs2mZI3Vt8hsrLNZhBuwEXpMas5hClACE"
+      }
     ],
     "education": [
       {
