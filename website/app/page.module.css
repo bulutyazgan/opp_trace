@@ -275,6 +275,44 @@
   overflow-x: auto;
 }
 
+/* Table Loading Overlay */
+.tableLoadingOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.tableLoadingContent {
+  text-align: center;
+  padding: 2rem;
+}
+
+.tableLoadingContent h3 {
+  margin: 1rem 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-purple-light);
+}
+
+.tableLoadingContent p {
+  margin: 0.5rem 0;
+  color: var(--text-tertiary);
+  font-size: 1rem;
+}
+
+.loadingProgress {
+  margin-top: 1rem !important;
+  font-size: 1.25rem !important;
+  font-weight: 600;
+  color: var(--accent-purple) !important;
+}
+
 .table {
   width: 100%;
   border-collapse: separate;
@@ -376,6 +414,20 @@
 .expandBtn:hover {
   background: var(--accent-purple-light);
   box-shadow: 0 4px 12px rgba(133, 35, 204, 0.5);
+}
+
+/* LinkedIn Link */
+.linkedinLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  color: #d1d5db !important;
+}
+
+.linkedinLink:hover {
+  color: #a78bfa !important;
+  transform: scale(1.2);
 }
 
 /* Headline */

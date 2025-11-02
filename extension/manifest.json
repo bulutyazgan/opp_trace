@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LumedIn Analyzer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "AI-powered event attendee analysis and networking insights for Luma events",
   "permissions": [
     "activeTab"
@@ -25,5 +25,11 @@
     "16": "icon16.png",
     "48": "icon48.png",
     "128": "icon128.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icon128.png"],
+      "matches": ["https://lu.ma/*", "https://luma.com/*", "https://*.lu.ma/*", "https://*.luma.com/*"]
+    }
+  ]
 }

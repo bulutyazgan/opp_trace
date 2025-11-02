@@ -318,6 +318,9 @@ export default function Dashboard() {
   const progress = data?.scrapingProgress;
   const scoringProgress = data?.scoringProgress;
 
+  // Check if scraping is in progress
+  const isScrapingInProgress = progress && progress.pending > 0 && progress.completed === 0;
+
   return (
     <div className={styles.container} ref={containerRef}>
       {/* Theme Toggler */}
@@ -481,7 +484,29 @@ export default function Dashboard() {
             )}
           </AnimatePresence>
 
-          <div className={styles.tableContainer}>
+          <div className={styles.tableContainer} style={{ position: 'relative' }}>
+            {/* Scraping Loading Overlay */}
+            <AnimatePresence>
+              {isScrapingInProgress && (
+                <motion.div
+                  className={styles.tableLoadingOverlay}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className={styles.tableLoadingContent}>
+                    <div className={styles.spinner}></div>
+                    <h3>Enriching LinkedIn Profiles</h3>
+                    <p>Fetching profile data from LinkedIn...</p>
+                    <p className={styles.loadingProgress}>
+                      {progress?.completed || 0} / {progress?.total || 0} completed
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <table className={styles.table} ref={tableRef}>
               <thead>
                 <tr>
@@ -490,8 +515,6 @@ export default function Dashboard() {
                   <th>Name</th>
                   <th>Headline</th>
                   <th>Events</th>
-                  <th>Score</th>
-                  <th>Hackathons Won</th>
                   <th>Tech Summary</th>
                   <th>Collab Summary</th>
                   <th>Summary</th>
@@ -547,45 +570,22 @@ export default function Dashboard() {
                         )}
                       </td>
                       <td>{attendee.eventsAttended || 0}</td>
-                      <td className={styles.scoreCell}>
-                        {attendee.overall_score !== null && attendee.overall_score !== undefined ? (
-                          <span className={styles.scoreValue}>{attendee.overall_score}</span>
-                        ) : attendee.scoringStatus === 'pending' ? (
-                          <span className={styles.loading}>...</span>
-                        ) : '-'}
-                      </td>
-                      <td>
-                        {attendee.hackathons_won !== null && attendee.hackathons_won !== undefined
-                          ? attendee.hackathons_won
-                          : '-'}
+                      <td className={styles.summaryCell}>
+                        {attendee.technical_skill_summary || '-'}
                       </td>
                       <td className={styles.summaryCell}>
-                        {attendee.technical_skill_summary || (
-                          attendee.scoringStatus === 'pending' ? (
-                            <span className={styles.loading}>...</span>
-                          ) : '-'
-                        )}
+                        {attendee.collaboration_summary || '-'}
                       </td>
                       <td className={styles.summaryCell}>
-                        {attendee.collaboration_summary || (
-                          attendee.scoringStatus === 'pending' ? (
-                            <span className={styles.loading}>...</span>
-                          ) : '-'
-                        )}
-                      </td>
-                      <td className={styles.summaryCell}>
-                        {attendee.summary || (
-                          attendee.scoringStatus === 'pending' ? (
-                            <span className={styles.loading}>...</span>
-                          ) : '-'
-                        )}
+                        {attendee.summary || '-'}
                       </td>
                       <td>
                         <span className={`${styles.status} ${styles[attendee.scrapingStatus || 'no_linkedin']}`}>
-                          {attendee.scrapingStatus === 'pending' && '⏳'}
-                          {attendee.scrapingStatus === 'completed' && '✓'}
-                          {attendee.scrapingStatus === 'failed' && '✗'}
-                          {attendee.scrapingStatus === 'no_linkedin' && '-'}
+                          {attendee.scrapingStatus === 'pending' && 'Loading'}
+                          {attendee.scrapingStatus === 'completed' && 'Done'}
+                          {attendee.scrapingStatus === 'failed' && 'Failed'}
+                          {attendee.scrapingStatus === 'no_linkedin' && 'No LinkedIn'}
+                          {!attendee.scrapingStatus && '-'}
                         </span>
                       </td>
                       <td className={styles.socials}>

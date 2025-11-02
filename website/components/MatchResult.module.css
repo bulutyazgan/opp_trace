@@ -4,8 +4,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,15 +25,17 @@
 }
 
 .modalContent {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  background: rgba(18, 18, 18, 0.95);
+  border: 1px solid rgba(133, 35, 204, 0.3);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(133, 35, 204, 0.4);
   max-width: 700px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
   animation: slideUp 0.3s ease-out;
   margin: auto;
+  backdrop-filter: blur(20px);
 }
 
 @keyframes slideUp {
@@ -52,36 +54,41 @@
   justify-content: space-between;
   align-items: center;
   padding: 24px 28px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid rgba(133, 35, 204, 0.3);
   position: sticky;
   top: 0;
-  background: white;
+  background: rgba(10, 10, 10, 0.95);
   z-index: 10;
-  border-radius: 16px 16px 0 0;
+  border-radius: 20px 20px 0 0;
+  backdrop-filter: blur(20px);
 }
 
 .modalHeader h2 {
   margin: 0;
   font-size: 1.75rem;
   font-weight: 700;
-  color: #111827;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ffffff 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .closeButton {
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #6b7280;
+  color: #9ca3af;
   cursor: pointer;
   padding: 4px 8px;
   line-height: 1;
-  border-radius: 4px;
+  border-radius: 8px;
   transition: all 0.2s;
 }
 
 .closeButton:hover {
-  background: #f3f4f6;
-  color: #111827;
+  background: rgba(133, 35, 204, 0.2);
+  color: #a78bfa;
 }
 
 .modalBody {
@@ -93,7 +100,7 @@
   text-align: center;
   margin-bottom: 28px;
   padding-bottom: 24px;
-  border-bottom: 2px solid #f3f4f6;
+  border-bottom: 2px solid rgba(133, 35, 204, 0.2);
 }
 
 .confidenceBadge {
@@ -104,13 +111,14 @@
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(133, 35, 204, 0.4);
 }
 
 .verifiedText {
-  color: #6b7280;
+  color: #a78bfa;
   font-size: 0.95rem;
   margin: 0;
+  font-weight: 500;
 }
 
 /* Profile Card */
@@ -120,9 +128,9 @@
   align-items: center;
   margin-bottom: 24px;
   padding: 20px;
-  background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+  background: rgba(30, 30, 30, 0.6);
   border-radius: 12px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid rgba(133, 35, 204, 0.2);
 }
 
 .photoContainer {
@@ -134,8 +142,8 @@
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 4px solid #8523cc;
+  box-shadow: 0 4px 16px rgba(133, 35, 204, 0.4);
 }
 
 .profileInfo {
@@ -146,12 +154,12 @@
   margin: 0 0 8px 0;
   font-size: 1.5rem;
   font-weight: 700;
-  color: #111827;
+  color: #ffffff;
 }
 
 .headline {
   margin: 0 0 8px 0;
-  color: #4b5563;
+  color: #d1d5db;
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -159,7 +167,7 @@
 .location,
 .connections {
   margin: 4px 0;
-  color: #6b7280;
+  color: #9ca3af;
   font-size: 0.9rem;
 }
 
@@ -172,13 +180,13 @@
   margin: 0 0 12px 0;
   font-size: 1.1rem;
   font-weight: 600;
-  color: #111827;
+  color: #a78bfa;
   padding-bottom: 8px;
-  border-bottom: 2px solid #e5e7eb;
+  border-bottom: 2px solid rgba(133, 35, 204, 0.3);
 }
 
 .about {
-  color: #4b5563;
+  color: #d1d5db;
   line-height: 1.6;
   margin: 0;
 }
@@ -192,25 +200,25 @@
 
 .experienceItem {
   padding: 12px;
-  background: #f9fafb;
+  background: rgba(30, 30, 30, 0.5);
   border-radius: 8px;
-  border-left: 3px solid #3b82f6;
+  border-left: 3px solid #a78bfa;
 }
 
 .expTitle {
   font-weight: 600;
-  color: #111827;
+  color: #ffffff;
   margin-bottom: 4px;
 }
 
 .expCompany {
-  color: #4b5563;
+  color: #d1d5db;
   font-size: 0.95rem;
   margin-bottom: 4px;
 }
 
 .expDuration {
-  color: #6b7280;
+  color: #9ca3af;
   font-size: 0.85rem;
 }
 
@@ -223,25 +231,25 @@
 
 .educationItem {
   padding: 12px;
-  background: #f9fafb;
+  background: rgba(30, 30, 30, 0.5);
   border-radius: 8px;
-  border-left: 3px solid #10b981;
+  border-left: 3px solid #8523cc;
 }
 
 .eduSchool {
   font-weight: 600;
-  color: #111827;
+  color: #ffffff;
   margin-bottom: 4px;
 }
 
 .eduDegree {
-  color: #4b5563;
+  color: #d1d5db;
   font-size: 0.95rem;
   margin-bottom: 4px;
 }
 
 .eduDuration {
-  color: #6b7280;
+  color: #9ca3af;
   font-size: 0.85rem;
 }
 
@@ -254,12 +262,12 @@
 }
 
 .scoreItem {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, #8523cc 0%, #6b21a8 100%);
   color: white;
   padding: 16px;
   border-radius: 12px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 4px 16px rgba(133, 35, 204, 0.3);
 }
 
 .scoreLabel {
@@ -275,11 +283,11 @@
 
 .summary {
   padding: 16px;
-  background: #eff6ff;
+  background: rgba(133, 35, 204, 0.1);
   border-radius: 8px;
-  color: #1e40af;
+  color: #d1d5db;
   line-height: 1.6;
-  border: 1px solid #dbeafe;
+  border: 1px solid rgba(133, 35, 204, 0.3);
 }
 
 /* Social Links */
@@ -293,31 +301,31 @@
 .socialLink {
   display: inline-block;
   padding: 10px 20px;
-  background: #f3f4f6;
-  color: #3b82f6;
+  background: rgba(30, 30, 30, 0.5);
+  color: #a78bfa;
   text-decoration: none;
   border-radius: 8px;
   font-weight: 500;
   transition: all 0.2s;
-  border: 1px solid #e5e7eb;
+  border: 1px solid rgba(133, 35, 204, 0.3);
 }
 
 .socialLink:hover {
-  background: #3b82f6;
+  background: rgba(133, 35, 204, 0.3);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 16px rgba(133, 35, 204, 0.4);
 }
 
 /* Footer */
 .footer {
   text-align: center;
   padding-top: 16px;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid rgba(133, 35, 204, 0.3);
 }
 
 .closeBtn {
-  background: #3b82f6;
+  background: #8523cc;
   color: white;
   border: none;
   padding: 12px 40px;
@@ -329,9 +337,9 @@
 }
 
 .closeBtn:hover {
-  background: #2563eb;
+  background: #6b21a8;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 16px rgba(133, 35, 204, 0.5);
 }
 
 /* Responsive */

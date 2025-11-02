@@ -267,14 +267,17 @@ async function startOpenAIScoring() {
         const evaluation = result.evaluation;
         attendee.hackathons_won = evaluation.hackathons_won;
         attendee.overall_score = evaluation.overall_score;
-        attendee.technical_skill_summary = evaluation.technical_skill_summary;
-        attendee.collaboration_summary = evaluation.collaboration_summary;
-        attendee.summary = evaluation.summary;
+        attendee.technical_skill_summary = evaluation.technical_skill_summary || '';
+        attendee.collaboration_summary = evaluation.collaboration_summary || '';
+        attendee.summary = evaluation.summary || '';
         attendee.scoringStatus = 'completed';
 
         currentData.scoringProgress.completed++;
         currentData.scoringProgress.pending--;
         console.log(`✓ Scored ${attendee.name}: ${evaluation.overall_score}/100`);
+        console.log(`  Tech: ${evaluation.technical_skill_summary?.substring(0, 50)}...`);
+        console.log(`  Collab: ${evaluation.collaboration_summary?.substring(0, 50)}...`);
+        console.log(`  Summary: ${evaluation.summary?.substring(0, 50)}...`);
       } else {
         // Failed to score
         attendee.scoringStatus = 'failed';

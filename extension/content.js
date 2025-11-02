@@ -60,7 +60,13 @@
     // Create toggle button (collapsed state)
     const toggleBtn = document.createElement('button');
     toggleBtn.className = 'luma-analyzer-toggle';
-    toggleBtn.innerHTML = '📊';
+
+    // Create icon image
+    const iconImg = document.createElement('img');
+    iconImg.src = chrome.runtime.getURL('icon128.png');
+    iconImg.alt = 'LumedIn';
+
+    toggleBtn.appendChild(iconImg);
     toggleBtn.title = 'LumedIn Analyzer';
 
     // Create expanded panel
