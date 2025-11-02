@@ -183,12 +183,55 @@ class FaceRecognitionService:
 
 
 # Example usage
-if __name__ == "__main__":
+def main(json_data, target_img_data):
+    """
+    Main function that accepts either file paths or actual data.
+    
+    Args:
+        json_data: Either a file path (str) OR a list of profile dictionaries
+        target_img_data: Either a file path (str) OR a PIL Image object OR numpy array
+    """
     service = FaceRecognitionService(model_name="VGG-Face", distance_metric="cosine")
+    
+    # Handle json_data - check if it's a path or actual data
+    if isinstance(json_data, str):
+        # It's a file path
+        profiles_json_path = json_data
+    elif isinstance(json_data, list):
+        # It's already loaded data - save temporarily
+        import tempfile
+        temp_json = tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False)
+        json.dump(json_data, temp_json)
+        temp_json.close()
+        profiles_json_path = temp_json.name
+    else:
+        raise ValueError("json_data must be either a file path (str) or list of profiles")
+    
+    # Handle target_img_data - check if it's a path or actual image
+    if isinstance(target_img_data, str):
+        # It's a file path
+        target_image_path = target_img_data
+    else:
+        # It's image data (PIL Image or numpy array) - save temporarily
+        import tempfile
+        from PIL import Image
+        import numpy as np
+        
+        temp_img = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
+        
+        if isinstance(target_img_data, Image.Image):
+            target_img_data.save(temp_img.name, 'JPEG')
+        elif isinstance(target_img_data, np.ndarray):
+            Image.fromarray(target_img_data).save(temp_img.name, 'JPEG')
+        else:
+            raise ValueError("target_img_data must be a file path, PIL Image, or numpy array")
+        
+        target_image_path = temp_img.name
 
+    # Run the matching
     results = service.find_all_matches(
-        target_image_path="./face_recognition_service/test_img5.jpg",
-        profiles_json_path="./sample_output.json",
+        target_image_path=target_image_path,
+        profiles_json_path=profiles_json_path,
         image_field="imageUrl"
     )
 
@@ -200,3 +243,18 @@ if __name__ == "__main__":
             print(f"Confidence: {result['confidence']:.2%}")
     else:
         print("\nNo match found")
+    
+    return results
+
+
+
+
+'''
+import json
+from PIL import Image
+
+profiles = json.load(open("../sample_output.json"))
+img = Image.open("./test_img2.jpg")
+
+main(profiles, img)
+'''
