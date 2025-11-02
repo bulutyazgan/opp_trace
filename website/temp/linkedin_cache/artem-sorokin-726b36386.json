@@ -1,0 +1,148 @@
+{
+  "url": "https://linkedin.com/in/artem-sorokin-726b36386",
+  "cachedAt": "2025-11-02T12:13:40.650Z",
+  "profile": {
+    "profile_photo": "https://media.licdn.com/dms/image/v2/D4E03AQFOHX7x-cedZA/profile-displayphoto-scale_200_200/B4EZmC8GDiIMAY-/0/1758838416465?e=2147483647&v=beta&t=TQ-dylSqjYVIoc9oSVqQzJ6pxJ0kFXv_iRC2u4Rwo_4",
+    "headline": "SE & PM",
+    "about": "artnsorokin17@gmail.com",
+    "experience": [
+      {
+        "position": "Director of Operations",
+        "company_url": "https://uk.linkedin.com/company/duty-refunds?trk=public_profile_experience-item_profile-section-card_subtitle-click",
+        "company_image": "https://media.licdn.com/dms/image/v2/C4E0BAQFMrSo7fjz-iQ/company-logo_100_100/company-logo_100_100/0/1670890410202/duty_refunds_logo?e=2147483647&v=beta&t=Bot2MxkZujXOaYJl9nIyn1bBNY3GEA7lOrcdvMmuOZk",
+        "company_name": "Duty Refunds",
+        "location": "Greater London, England, United Kingdom",
+        "summary": "Operation of logistics business within EU and UK",
+        "starts_at": "Sep 2025",
+        "ends_at": "Present",
+        "duration": "3 months"
+      },
+      {
+        "position": "Full Stack Engineer",
+        "company_image": "https://static.licdn.com/aero-v1/sc/h/cs8pjfgyw96g44ln9r7tct85f",
+        "company_name": "Content Zavod",
+        "location": null,
+        "summary": "JS, ML and N8N Developer | Product Operations Across Europe | Team Management",
+        "starts_at": "Aug 2025",
+        "ends_at": "Present",
+        "duration": "4 months"
+      },
+      {
+        "position": "Java Software Engineer",
+        "company_url": "https://ru.linkedin.com/company/jetinfosystems?trk=public_profile_experience-item_profile-section-card_subtitle-click",
+        "company_image": "https://media.licdn.com/dms/image/v2/C4E0BAQGNUDUh6VnK1A/company-logo_100_100/company-logo_100_100/0/1631369430056/jet_infosystems_logo?e=2147483647&v=beta&t=RwjzjnbBi0tDAiwNBfBzMUYslVa6QOkHVeEqXZnwDVQ",
+        "company_name": "Jet Infosystems",
+        "location": null,
+        "summary": "Development of an IDM systems | Implementation of AI agent for documentation",
+        "starts_at": "Jun 2025",
+        "ends_at": "Sep 2025",
+        "duration": "4 months"
+      },
+      {
+        "position": "Product Manager",
+        "company_url": "https://ru.linkedin.com/company/alfa-bank?trk=public_profile_experience-item_profile-section-card_subtitle-click",
+        "company_image": "https://media.licdn.com/dms/image/v2/C4D0BAQGtaNDEUk4FSQ/company-logo_100_100/company-logo_100_100/0/1630556941344/alfa_bank_logo?e=2147483647&v=beta&t=m3kTdJLlCiBjXonOWshe4j7w4kys5xjpBFm8it1jSko",
+        "company_name": "Alfa-Bank",
+        "location": null,
+        "summary": "Developed and pitched \"Alpha-Sports\" during internal hackathon, a solution to attract younger demographics to banking services through gamified engagement, informed by thorough competitor and market analysis; collaborated with architects to design high-fidelity MVP prototypes for presentation.",
+        "starts_at": "Aug 2025",
+        "ends_at": "Aug 2025",
+        "duration": "1 month"
+      },
+      {
+        "position": "Product Manager & Frontend Developer",
+        "company_url": "https://ru.linkedin.com/company/vkcompany?trk=public_profile_experience-item_profile-section-card_subtitle-click",
+        "company_image": "https://media.licdn.com/dms/image/v2/C4D0BAQF_UscBmF9ivw/company-logo_100_100/company-logo_100_100/0/1637935275687/vkcompany_logo?e=2147483647&v=beta&t=DOxhsBOhu4eWj6oxM2z8ZIeck2XuPFnDgAXSj-ZN9Sc",
+        "company_name": "VK",
+        "location": null,
+        "summary": "Conceptualized and developed a VK mini app during hackathon to enhance user engagement by implementing an innovative poll-based system and a slow-dopamine feedback mechanism, increasing app retention by 20% and average session duration by 15%. Conducted market analysis, created a presentation, and pitched the idea.",
+        "starts_at": "Jul 2025",
+        "ends_at": "Jul 2025",
+        "duration": "1 month"
+      },
+      {
+        "position": "Full Stack Developer",
+        "company_url": "https://www.linkedin.com/company/gym-point?trk=public_profile_experience-item_profile-section-card_subtitle-click",
+        "company_image": "https://media.licdn.com/dms/image/v2/D4D0BAQEfvLnSTsX9qg/company-logo_100_100/B4DZiVAPm.HwAQ-/0/1754846526790/gym_point_logo?e=2147483647&v=beta&t=Tz7D2HYGVEW2gBi3ypr3zwpgr95dPp3BCCzE6vlQ7Sg",
+        "company_name": "GymPoint",
+        "location": null,
+        "summary": "Full Stack JS Developer",
+        "starts_at": "Dec 2024",
+        "ends_at": "Apr 2025",
+        "duration": "5 months"
+      },
+      {
+        "position": "Python Developer & Project Manager",
+        "company_url": "https://ua.linkedin.com/company/jsc-expobank?trk=public_profile_experience-item_profile-section-card_subtitle-click",
+        "company_image": "https://static.licdn.com/aero-v1/sc/h/cs8pjfgyw96g44ln9r7tct85f",
+        "company_name": "JSC Expobank",
+        "location": null,
+        "summary": "Development of the Offer System within a Flask micro service between partner companies",
+        "starts_at": "Sep 2024",
+        "ends_at": "Oct 2024",
+        "duration": "2 months"
+      }
+    ],
+    "education": [
+      {
+        "college_url": "https://uk.linkedin.com/school/university-college-london/?trk=public_profile_school_profile-section-card_image-click",
+        "college_name": "UCL",
+        "college_image": "https://media.licdn.com/dms/image/v2/C4E0BAQEkPpD2CJSBpQ/company-logo_100_100/company-logo_100_100/0/1663656692926/university_college_london_logo?e=2147483647&v=beta&t=OYFYh5UTRQV6rA0LzeeoKxP9Gmx3RqmCayB9jS9moII",
+        "college_degree": "Master of Engineering - MEng",
+        "college_degree_field": "Computer Science",
+        "college_duration": "2025 - 2029",
+        "college_activity": ""
+      },
+      {
+        "college_url": "https://uk.linkedin.com/school/the-king's-school-canterbury/?trk=public_profile_school_profile-section-card_image-click",
+        "college_name": "The King's School, Canterbury",
+        "college_image": "https://media.licdn.com/dms/image/v2/D4E0BAQHqw86eUDfM6A/company-logo_100_100/company-logo_100_100/0/1714136083810/the_kings_school_canterbury_logo?e=2147483647&v=beta&t=rbD4GYHSeAkqaiaEVkMA2XyXDO6sgPOGUiIn2Isq6Ck",
+        "college_degree": "High School Diploma",
+        "college_degree_field": "",
+        "college_duration": "2023 - 2025",
+        "college_activity": "Mathematics (A*), Further Mathematics (A), Physics (A), CS (A) Russian (A*), EPQ (A)"
+      }
+    ],
+    "articles": [],
+    "description": {
+      "description1": "Duty Refunds",
+      "description1_link": "https://uk.linkedin.com/company/duty-refunds?trk=public_profile_topcard-current-company",
+      "description2": "UCL",
+      "description2_link": "https://uk.linkedin.com/school/university-college-london/?trk=public_profile_topcard-school",
+      "description3": ""
+    },
+    "activities": [
+      {
+        "link": "https://www.linkedin.com/posts/this-is-such-a-great-opportunity-to-be-invited-activity-7389753590623514625-cxYg",
+        "image": "https://static.licdn.com/aero-v1/sc/h/53n89ecoxpr1qrki1do3alazb",
+        "title": "This is such a great opportunity to be invited as a speaker in UCL UCL Education Innovation and Edupreneurship (EIE) Society ans share my expertise…",
+        "activity": "Liked by Artem Sorokin"
+      },
+      {
+        "link": "https://www.linkedin.com/posts/i-am-so-thrilled-to-share-that-i-have-been-activity-7385025150833905664-vEW4",
+        "image": "https://media.licdn.com/dms/image/v2/D4D22AQGBXtES2OE3lg/feedshare-shrink_1280/B4DZnzhPLVIAAs-/0/1760727200901?e=2147483647&v=beta&t=AjgBv0BlAhUTvRrj8bwqyZF2XuPriAaFusablID1w48",
+        "title": "I am so thrilled to share that I have been selected as a mentor for the WOMEN IN TECH ® Global, which promotes equal opportunities for women in…",
+        "activity": "Liked by Artem Sorokin"
+      },
+      {
+        "link": "https://www.linkedin.com/posts/alexavilov_im-pleased-to-share-that-i-will-be-joining-activity-7387155372039512064-kqu5",
+        "image": "https://media.licdn.com/dms/image/v2/D4E22AQHsgaQ9OxfxHg/feedshare-shrink_1280/B4EZoRTDqjKoAs-/0/1761226800773?e=2147483647&v=beta&t=JuNl1lgaVpykWukM9H9an_1Rqbzr4ryZGHm95BQrWPg",
+        "title": "I’m pleased to share that I will be joining Castore Consulting as a Project Manager.\n\nI look forward to leading a cross-functional team on a real…",
+        "activity": "Liked by Artem Sorokin"
+      },
+      {
+        "link": "https://ru.linkedin.com/posts/jetinfosystems_%D0%B8%D0%BD%D1%84%D0%BE%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%D0%B4%D0%B6%D0%B5%D1%82-jetinfosystems-%D0%B8%D0%B1-activity-7381682016464965632-SjG4",
+        "image": "https://media.licdn.com/dms/image/v2/D4E22AQF1T52CZ5zNUw/feedshare-shrink_1280/B4EZnEArLsIoAw-/0/1759930135988?e=2147483647&v=beta&t=mSwPTCzFu6nqBWt5TobTadMh4sNfdDbHZxMKpd6IXZo",
+        "title": "Инфосистемы Джет — №1\n\nЗаняли первое место в рейтинге частных интеграторов в области информационной безопасности по версии TAdviser в 2025 году…",
+        "activity": "Liked by Artem Sorokin"
+      },
+      {
+        "link": "https://www.linkedin.com/posts/boris-starkov_excited-to-join-the-most-legendary-growth-activity-7381255722216599552-MIBI",
+        "image": "https://media.licdn.com/dms/image/v2/D5622AQGWOzQcuZjn7w/feedshare-shrink_2048_1536/B56Zm96B8kHQAw-/0/1759827730980?e=2147483647&v=beta&t=OGDBQMlrjzyJ-zIGx9ZLMgaJNmEf5dsTWwHoXNcNq1I",
+        "title": "excited to join the most legendary growth engineering team in London! \n\nElevenLabs Angelo Giacco Luke Harries",
+        "activity": "Liked by Artem Sorokin"
+      }
+    ],
+    "certification": []
+  }
+}

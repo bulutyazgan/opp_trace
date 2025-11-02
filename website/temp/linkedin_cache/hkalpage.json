@@ -1,0 +1,102 @@
+{
+  "url": "https://linkedin.com/in/hkalpage",
+  "cachedAt": "2025-11-02T12:13:46.393Z",
+  "profile": {
+    "profile_photo": "https://static.licdn.com/aero-v1/sc/h/9c8pery4andzj6ohjkjp54ma2",
+    "experience": [
+      {
+        "company_name": "Cisco",
+        "company_image": "https://media.licdn.com/dms/image/v2/D560BAQFYnR_Zrm87Dg/company-logo_100_100/B56ZnMyVr4HUAQ-/0/1760077372453/cisco_logo?e=2147483647&v=beta&t=-FnJBwOSzJBs2mZI3Vt8hsrLNZhBuwEXpMas5hClACE"
+      }
+    ],
+    "education": [],
+    "articles": [
+      {
+        "link": "https://www.linkedin.com/pulse/cisco-ic-hack-2023-hasith-kalpage",
+        "image": "https://media.licdn.com/dms/image/v2/D4E12AQHFSJwP2B1mfQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1675953025845?e=2147483647&v=beta&t=_OZCS5cK3YUbKkSUSUK3OdNap1Xpojvvs_vblKEdx4s",
+        "title": "Cisco @ IC Hack 2023",
+        "author": "",
+        "published_date": "Feb 9, 2023"
+      },
+      {
+        "link": "https://www.linkedin.com/pulse/webexkubedcon-2022-hasith-kalpage",
+        "image": "https://media.licdn.com/dms/image/v2/D4E12AQE6jFsYTdcLcw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1665164322336?e=2147483647&v=beta&t=6PNJPnush7wNZ3fiNSQEubbtw87qHdwi3enVfNnm3JA",
+        "title": "WebexKubedCon 2022",
+        "author": "",
+        "published_date": "Oct 7, 2022"
+      },
+      {
+        "link": "https://www.linkedin.com/pulse/hyper-scaling-webex-media-kubernetes-cloudnative-hasith-kalpage",
+        "image": "https://media.licdn.com/dms/image/v2/C4D12AQF4G2fEihEGbA/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1596800551844?e=2147483647&v=beta&t=N3jmYWjonjvaQQbOo259n_8Sax9NnbT0iOYzTGMOLK4",
+        "title": "Hyper scaling Webex media on Kubernetes & CloudNative",
+        "author": "",
+        "published_date": "Aug 7, 2020"
+      }
+    ],
+    "description": {
+      "description1": "Cisco",
+      "description1_link": "https://www.linkedin.com/company/cisco?trk=public_profile_topcard-current-company",
+      "description2": "Imperial College Business School",
+      "description2_link": "https://uk.linkedin.com/school/imperial-business-school/?trk=public_profile_topcard-school",
+      "description3": "Company Website",
+      "description3_link": "https://www.linkedin.com/redir/redirect?url=https%3A%2F%2Foutshift%2Ecisco%2Ecom%2F&urlhash=Fpss&trk=public_profile_topcard-website"
+    },
+    "activities": [
+      {
+        "link": "https://www.linkedin.com/posts/zeyang-shu_devcon25-learningthroughplay-thelegogroup-activity-7390342246048432128-70qL",
+        "image": "https://media.licdn.com/dms/image/v2/D4E22AQFMKTrNUoMHag/feedshare-shrink_1280/B4EZo_E5rSIoAs-/0/1761994846188?e=2147483647&v=beta&t=gZQ9IRkbpeU7cl4xuqyWHVe6hLixyP5emFSNgTtONUM",
+        "title": "Bookmarking a fruitful October✨\n\n🎤 Talk at #DevCon25: taming the Spark for large-scale ML models training - real lessons from work - building a…",
+        "activity": "Liked by Hasith K."
+      },
+      {
+        "link": "https://www.linkedin.com/posts/mmeckes_great-opportunity-to-see-what-hasith-k-and-activity-7390325620389392385-nKhL",
+        "image": "https://media.licdn.com/dms/image/v2/D4E22AQGRY5zAqr8cBA/feedshare-shrink_2048_1536/B4EZownjtnHgA4-/0/1761752268061?e=2147483647&v=beta&t=owdTInSwxqEoAPh-qNgbbQu6IObkfiGxFk6rBabvT4U",
+        "title": "Great opportunity to see what Hasith K. and Niall Thomson have been exploring over the last year or so. \n\nI’ve been following the work they have been…",
+        "activity": "Liked by Hasith K."
+      },
+      {
+        "link": "https://www.linkedin.com/posts/brace-s_introducing-langsmith-agent-builder-activity-7389347739815530498-7Y0k",
+        "image": "https://media.licdn.com/dms/image/v2/D4D05AQFwWy03jCuBrg/videocover-high/B4DZow8l.JJMBU-/0/1761757783046?e=2147483647&v=beta&t=rBycbP2vtfDxCboj75hWA5jzp1FENSfLrapV-zKBGP8",
+        "title": "Introducing LangSmith Agent Builder 🤖🧱\n\nA true agent building experience (not workflows!!), all through a simple natural language interface…",
+        "activity": "Liked by Hasith K."
+      },
+      {
+        "link": "https://www.linkedin.com/posts/langchain_enterprise-deep-research-a-multi-agent-activity-7388243018455322624-ZTXK",
+        "image": "https://media.licdn.com/dms/image/v2/D5622AQHY5PffQEQ8vA/feedshare-shrink_1280/B56ZohP4GVG4As-/0/1761494402509?e=2147483647&v=beta&t=P0E7Pyg-qChl_p3hly3tvk1MwN1dWOMAAiZs_7eT0AY",
+        "title": "🔍🤖 Enterprise Deep Research\n\nA multi-agent system leveraging LangGraph to power enterprise research automation. Features real-time streaming…",
+        "activity": "Liked by Hasith K."
+      },
+      {
+        "link": "https://www.linkedin.com/posts/outshiftbycisco_why-ai-agents-should-operate-in-a-decentralized-activity-7390009651972714497-z8f9",
+        "image": "https://media.licdn.com/dms/image/v2/D4E10AQH9Lws82OQVxw/ads-video-thumbnail_720_1280/B4EZo1eFvmIoAk-/0/1761833675795?e=2147483647&v=beta&t=GspwhSepN4udnBJKbw3t8pHqkLxPklNltXATGkv7BoI",
+        "title": "📣 Introducing: A decentralized identity system that emerged through open-source collaboration—owned by everyone, accessible to all. Built for the…",
+        "activity": "Liked by Hasith K."
+      },
+      {
+        "link": "https://www.linkedin.com/posts/sujith-joseph_what-an-incredible-experience-speaking-at-activity-7386832689401827328-X4qX",
+        "image": "https://media.licdn.com/dms/image/v2/D5622AQHUjb1d32u0NA/feedshare-shrink_800/B56ZoNNLpJJkAg-/0/1761158151475?e=2147483647&v=beta&t=hc1tzFOem5vIOySDk2YpRx0TreX39qh_hkHvKCCzu6Q",
+        "title": "What an incredible experience speaking at ElasticON AI San Francisco on “Building Enterprise-Scale Agentic AI” yesterday.\n It was energizing to share…",
+        "activity": "Liked by Hasith K."
+      },
+      {
+        "link": "https://www.linkedin.com/posts/deniz-aslan-ustunes-8622155_no-surprise-that-china-is-making-headlines-activity-7389196380277460992-YoEx",
+        "image": "https://media.licdn.com/dms/image/v2/D4D22AQHvZILNwLK2Qg/feedshare-shrink_800/B4DZouy3BfKUAg-/0/1761721688144?e=2147483647&v=beta&t=7sNRiEWsaeL__fUA3PX4AaF2w_9fPaqjgxli-IjOy4Q",
+        "title": "No surprise that China is making headlines for its rapid innovation and global influence, but experiencing it firsthand truly brought those headlines…",
+        "activity": "Liked by Hasith K."
+      },
+      {
+        "link": "https://www.linkedin.com/posts/csantanapr_awsreinvent-awsreinvent2025-eks-activity-7389320312368025601-rax6",
+        "image": "https://media.licdn.com/dms/image/v2/D4E22AQExGtv2MkTtUw/feedshare-shrink_2048_1536/B4EZowjprpKoAw-/0/1761751245304?e=2147483647&v=beta&t=r_QnpUOIUWhi5M4PzjWav3-NNJhrfwfXrKSJAKZc6Ng",
+        "title": "🚀 Excited to be speaking at AWS re:Invent 2025! Join me and my amazing co-speakers for a hands-on session that will transform how you work with…",
+        "activity": "Liked by Hasith K."
+      },
+      {
+        "link": "https://www.linkedin.com/posts/jyotibansal_one-of-the-core-beliefs-i-hold-as-a-founder-activity-7380972014720921600-1XCd",
+        "image": "https://static.licdn.com/aero-v1/sc/h/53n89ecoxpr1qrki1do3alazb",
+        "title": "One of the core beliefs I hold as a founder: your company culture must revolve around customer value.\n\nAt Harness, that belief shows up in how we…",
+        "activity": "Liked by Hasith K."
+      }
+    ],
+    "certification": []
+  }
+}
