@@ -1,0 +1,100 @@
+/* Theme Variables */
+:root[data-theme='dark'] {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: rgba(18, 18, 18, 0.8);
+  --bg-tertiary: rgba(30, 30, 30, 0.5);
+  --text-primary: #ffffff;
+  --text-secondary: #d1d5db;
+  --text-tertiary: #9ca3af;
+  --text-quaternary: #6b7280;
+  --accent-purple: #8523cc;
+  --accent-purple-light: #a78bfa;
+  --accent-purple-lighter: #c4b5fd;
+  --border-color: rgba(255, 255, 255, 0.05);
+  --border-color-hover: rgba(255, 255, 255, 0.1);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --gradient-start: rgba(139, 92, 246, 0.03);
+  --gradient-middle: rgba(168, 85, 247, 0.03);
+  --gradient-end: rgba(126, 34, 206, 0.03);
+}
+
+:root[data-theme='light'] {
+  --bg-primary: #ffffff;
+  --bg-secondary: rgba(249, 250, 251, 0.8);
+  --bg-tertiary: rgba(243, 244, 246, 0.8);
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-tertiary: #6b7280;
+  --text-quaternary: #9ca3af;
+  --accent-purple: #8523cc;
+  --accent-purple-light: #9333ea;
+  --accent-purple-lighter: #a855f7;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-color-hover: rgba(0, 0, 0, 0.15);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --gradient-start: rgba(133, 35, 204, 0.03);
+  --gradient-middle: rgba(147, 51, 234, 0.03);
+  --gradient-end: rgba(168, 85, 247, 0.03);
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  border: none;
+  background: var(--bg-secondary);
+  backdrop-filter: blur(20px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  box-shadow: 0 4px 16px var(--shadow-color);
+  transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+  box-shadow: 0 6px 24px rgba(133, 35, 204, 0.3);
+}
+
+.theme-toggle-container {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-purple);
+}
+
+/* Smooth theme transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Override transition for animations */
+.theme-icon,
+[class*='motion'] {
+  transition: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .theme-toggle-btn {
+    top: 1rem;
+    right: 1rem;
+    width: 44px;
+    height: 44px;
+  }
+}

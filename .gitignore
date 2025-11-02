@@ -37,3 +37,6 @@ Thumbs.db
 
 # Face recognition temp files
 website/temp/
+
+# Photos
+photos/

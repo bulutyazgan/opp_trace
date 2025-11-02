@@ -2,6 +2,9 @@
 // This allows multiple API routes to access the same data
 // Uses global singleton pattern to survive Next.js HMR (Hot Module Replacement)
 
+import fs from 'fs';
+import path from 'path';
+
 // Extend global namespace to include our dataStore
 declare global {
   var __dataStore: DataStore | undefined;
@@ -91,6 +94,43 @@ class DataStore {
         skipped: 0,
       },
     };
+    // Load from temp cache on initialization
+    this.loadFromTempCache();
+  }
+
+  private loadFromTempCache(): void {
+    try {
+      const tempDir = path.join(process.cwd(), 'temp');
+      if (!fs.existsSync(tempDir)) {
+        console.log('📦 DataStore: No temp cache directory found');
+        return;
+      }
+
+      // Find all attendees JSON files
+      const files = fs.readdirSync(tempDir)
+        .filter(f => f.startsWith('attendees_') && f.endsWith('.json'))
+        .map(f => ({
+          name: f,
+          path: path.join(tempDir, f),
+          timestamp: parseInt(f.replace('attendees_', '').replace('.json', ''))
+        }))
+        .sort((a, b) => b.timestamp - a.timestamp); // Sort by newest first
+
+      if (files.length === 0) {
+        console.log('📦 DataStore: No cached attendee files found');
+        return;
+      }
+
+      // Load the most recent file
+      const latestFile = files[0];
+      const fileContent = fs.readFileSync(latestFile.path, 'utf-8');
+      const cachedData = JSON.parse(fileContent);
+
+      this.data = cachedData;
+      console.log(`📦 DataStore: Loaded ${cachedData.attendees.length} attendees from cache (${latestFile.name})`);
+    } catch (error) {
+      console.error('📦 DataStore: Error loading from temp cache:', error);
+    }
   }
 
   public static getInstance(): DataStore {

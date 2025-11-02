@@ -2,8 +2,13 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Luma Attendee Dashboard',
-  description: 'Analyze and view Luma event attendees',
+  title: 'LumedIn Analytics',
+  description: 'AI-powered event attendee analysis and networking insights',
+  icons: {
+    icon: '/media/logo.png',
+    shortcut: '/media/logo.png',
+    apple: '/media/logo.png',
+  },
 }
 
 export default function RootLayout({
@@ -12,7 +17,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark">
+      <head>
+        <link rel="icon" href="/media/logo.png" type="image/png" />
+      </head>
       <body>{children}</body>
     </html>
   )

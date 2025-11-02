@@ -47,63 +47,85 @@
 
   function initializeAnalyzer() {
     // Check if button already exists
-    if (document.getElementById('luma-analyzer-button')) {
-      console.log('Luma Analyzer: Button already exists');
+    if (document.getElementById('luma-analyzer-widget')) {
+      console.log('Luma Analyzer: Widget already exists');
       return;
     }
 
-    // Create the analyze button
+    // Create the widget container
+    const widget = document.createElement('div');
+    widget.id = 'luma-analyzer-widget';
+    widget.className = 'luma-analyzer-widget';
+
+    // Create toggle button (collapsed state)
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'luma-analyzer-toggle';
+    toggleBtn.innerHTML = '📊';
+    toggleBtn.title = 'LumedIn Analyzer';
+
+    // Create expanded panel
+    const panel = document.createElement('div');
+    panel.className = 'luma-analyzer-panel hidden';
+
+    const panelHeader = document.createElement('div');
+    panelHeader.className = 'luma-analyzer-header';
+    panelHeader.innerHTML = '<span>LumedIn</span>';
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'luma-analyzer-close';
+    closeBtn.innerHTML = '✕';
+    closeBtn.title = 'Minimize';
+
+    panelHeader.appendChild(closeBtn);
+
+    // Create analyze button
     const analyzeButton = document.createElement('button');
-    analyzeButton.id = 'luma-analyzer-button';
     analyzeButton.className = 'luma-analyzer-btn';
-    analyzeButton.textContent = 'Conduct Analysis';
+    analyzeButton.textContent = 'Analyze Event';
     analyzeButton.title = 'Analyze attendees and send to dashboard';
 
-    // Add click handler
+    panel.appendChild(panelHeader);
+    panel.appendChild(analyzeButton);
+
+    widget.appendChild(toggleBtn);
+    widget.appendChild(panel);
+    document.body.appendChild(widget);
+
+    // Toggle panel visibility
+    toggleBtn.addEventListener('click', () => {
+      panel.classList.remove('hidden');
+      toggleBtn.classList.add('hidden');
+    });
+
+    closeBtn.addEventListener('click', () => {
+      panel.classList.add('hidden');
+      toggleBtn.classList.remove('hidden');
+    });
+
+    // Add click handler for analyze button
     analyzeButton.addEventListener('click', async () => {
       analyzeButton.disabled = true;
       analyzeButton.textContent = 'Analyzing...';
 
       try {
         await analyzeAttendees();
-        analyzeButton.textContent = 'Analysis Complete!';
+        analyzeButton.textContent = '✓ Complete!';
         setTimeout(() => {
-          analyzeButton.textContent = 'Conduct Analysis';
+          analyzeButton.textContent = 'Analyze Event';
           analyzeButton.disabled = false;
         }, 3000);
       } catch (error) {
         console.error('Analysis failed:', error);
         alert('Analysis failed: ' + error.message);
-        analyzeButton.textContent = 'Analysis Failed';
-        analyzeButton.style.backgroundColor = '#ef4444';
+        analyzeButton.textContent = '✗ Failed';
         setTimeout(() => {
-          analyzeButton.textContent = 'Conduct Analysis';
-          analyzeButton.style.backgroundColor = '';
+          analyzeButton.textContent = 'Analyze Event';
           analyzeButton.disabled = false;
         }, 3000);
       }
     });
 
-    // Inject the button
-    injectButton(analyzeButton);
-  }
-
-  function injectButton(button) {
-    // Create a wrapper div for better positioning
-    const wrapper = document.createElement('div');
-    wrapper.style.cssText = `
-      position: fixed;
-      top: 80px;
-      right: 20px;
-      z-index: 10000;
-      padding: 10px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    `;
-    wrapper.appendChild(button);
-    document.body.appendChild(wrapper);
-    console.log('Luma Analyzer: Button injected successfully');
+    console.log('Luma Analyzer: Widget injected successfully');
   }
 
   // Main analysis function (converted from your original script)

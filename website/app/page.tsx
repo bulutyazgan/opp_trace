@@ -1,9 +1,17 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import gsap from 'gsap';
+import { Camera, Download, Linkedin, Twitter, Instagram, Globe, Eye } from 'lucide-react';
+import Image from 'next/image';
 import styles from './page.module.css';
+import './themes.css';
 import CameraModal from '@/components/CameraModal';
 import MatchResult from '@/components/MatchResult';
+import CircularProgress from '@/components/CircularProgress';
+import ThemeToggler from '@/components/ThemeToggler';
+import AttendeeDetailsModal from '@/components/AttendeeDetailsModal';
 
 interface LinkedInProfile {
   profile_photo?: string;
@@ -22,22 +30,6 @@ interface LinkedInProfile {
     college_degree: string;
     college_degree_field: string | null;
     college_duration: string;
-  }>;
-  articles?: Array<any>;
-  description?: {
-    description1?: string;
-    description2?: string;
-    description3?: string;
-  };
-  activities?: Array<{
-    link: string;
-    title: string;
-    activity: string;
-  }>;
-  certification?: Array<{
-    certification: string;
-    company_name: string;
-    issue_date: string;
   }>;
 }
 
@@ -90,7 +82,10 @@ export default function Dashboard() {
   const [data, setData] = useState<AttendeeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
+
+  // Attendee details modal state
+  const [selectedAttendee, setSelectedAttendee] = useState<Attendee | null>(null);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
 
   // Face recognition state
   const [showCameraModal, setShowCameraModal] = useState(false);
@@ -100,6 +95,8 @@ export default function Dashboard() {
   const [faceMatchLoading, setFaceMatchLoading] = useState(false);
   const [faceMatchError, setFaceMatchError] = useState<string | null>(null);
   const matchedRowRef = useRef<HTMLTableRowElement>(null);
+  const tableRef = useRef<HTMLTableElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const fetchData = async (preserveScrollPosition = false) => {
     try {
@@ -129,14 +126,49 @@ export default function Dashboard() {
     return () => clearInterval(interval);
   }, []);
 
-  const toggleRow = (index: number) => {
-    const newExpanded = new Set(expandedRows);
-    if (newExpanded.has(index)) {
-      newExpanded.delete(index);
-    } else {
-      newExpanded.add(index);
+  // GSAP animation for table rows on mount
+  useEffect(() => {
+    if (data && data.attendees.length > 0 && tableRef.current) {
+      const rows = tableRef.current.querySelectorAll('tbody tr');
+      gsap.fromTo(
+        rows,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.03,
+          ease: 'power2.out',
+        }
+      );
     }
-    setExpandedRows(newExpanded);
+  }, [data]);
+
+  // GSAP animation for container on mount
+  useEffect(() => {
+    if (containerRef.current) {
+      gsap.fromTo(
+        containerRef.current.children,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'power3.out',
+        }
+      );
+    }
+  }, [loading]);
+
+  const openDetailsModal = (attendee: Attendee) => {
+    setSelectedAttendee(attendee);
+    setShowDetailsModal(true);
+  };
+
+  const closeDetailsModal = () => {
+    setShowDetailsModal(false);
+    setSelectedAttendee(null);
   };
 
   const handleCameraCapture = async (imageData: string) => {
@@ -205,7 +237,7 @@ export default function Dashboard() {
     const rows = [
       [
         'Name', 'Profile URL', 'Events Attended', 'Instagram', 'X', 'TikTok', 'LinkedIn', 'Website',
-        'Headline', 'About', 'Scraping Status',
+        'Headline', 'Scraping Status',
         'Overall Score', 'Hackathons Won',
         'Technical Skill Summary', 'Collaboration Summary', 'Summary', 'Scoring Status'
       ]
@@ -222,7 +254,6 @@ export default function Dashboard() {
         attendee.linkedin || '',
         attendee.website || '',
         attendee.linkedinData?.headline || '',
-        attendee.linkedinData?.about || '',
         attendee.scrapingStatus || '',
         attendee.overall_score?.toString() || '',
         attendee.hackathons_won?.toString() || '',
@@ -248,7 +279,15 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className={styles.container}>
-        <div className={styles.loading}>Loading attendee data...</div>
+        <motion.div
+          className={styles.loading}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className={styles.spinner}></div>
+          Loading attendee data...
+        </motion.div>
       </div>
     );
   }
@@ -256,7 +295,14 @@ export default function Dashboard() {
   if (error) {
     return (
       <div className={styles.container}>
-        <div className={styles.error}>Error: {error}</div>
+        <motion.div
+          className={styles.error}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          Error: {error}
+        </motion.div>
       </div>
     );
   }
@@ -273,70 +319,106 @@ export default function Dashboard() {
   const scoringProgress = data?.scoringProgress;
 
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <h1>Luma Attendee Dashboard</h1>
-        {data?.eventUrl && (
-          <p className={styles.eventUrl}>
-            Event: <a href={data.eventUrl} target="_blank" rel="noopener noreferrer">{data.eventUrl}</a>
-          </p>
-        )}
-        {data?.timestamp && (
-          <p className={styles.timestamp}>Last updated: {new Date(data.timestamp).toLocaleString()}</p>
-        )}
-      </header>
+    <div className={styles.container} ref={containerRef}>
+      {/* Theme Toggler */}
+      <ThemeToggler />
 
-      {/* LinkedIn Scraping Progress */}
-      {progress && progress.total > 0 && (
-        <div className={styles.progressSection}>
-          <h3>LinkedIn Scraping Progress</h3>
-          <div className={styles.progressBar}>
-            <div
-              className={styles.progressFill}
-              style={{
-                width: `${(progress.completed / progress.total) * 100}%`,
-                backgroundColor: progress.pending > 0 ? '#4caf50' : '#2196f3'
-              }}
+      {/* Horizontal Header with Progress */}
+      <div className={styles.headerWithProgress}>
+        {/* Left: Title Section */}
+        <div className={styles.titleSection}>
+          <div className={styles.titleWithLogo}>
+            <Image
+              src="/media/logo.png"
+              alt="LumedIn Logo"
+              width={48}
+              height={48}
+              className={styles.logo}
             />
+            <h1 className={styles.mainTitle}>LumedIn Analytics</h1>
           </div>
-          <div className={styles.progressStats}>
-            <span className={styles.progressCompleted}>✓ {progress.completed} completed</span>
-            <span className={styles.progressPending}>⏳ {progress.pending} pending</span>
-            <span className={styles.progressFailed}>✗ {progress.failed} failed</span>
-            <span className={styles.progressTotal}>Total: {progress.total}</span>
-          </div>
+          {data?.eventUrl && (
+            <p className={styles.eventUrl}>
+              Event: <a href={data.eventUrl} target="_blank" rel="noopener noreferrer">{data.eventUrl}</a>
+            </p>
+          )}
+          {data?.timestamp && (
+            <p className={styles.timestamp}>Last updated: {new Date(data.timestamp).toLocaleString()}</p>
+          )}
         </div>
-      )}
 
-      {/* OpenAI Scoring Progress */}
-      {scoringProgress && scoringProgress.total > 0 && (
-        <div className={styles.progressSection}>
-          <h3>OpenAI Scoring Progress</h3>
-          <div className={styles.progressBar}>
-            <div
-              className={styles.progressFill}
-              style={{
-                width: `${(scoringProgress.completed / scoringProgress.total) * 100}%`,
-                backgroundColor: scoringProgress.pending > 0 ? '#9c27b0' : '#673ab7'
-              }}
-            />
-          </div>
-          <div className={styles.progressStats}>
-            <span className={styles.progressCompleted}>✓ {scoringProgress.completed} scored</span>
-            <span className={styles.progressPending}>⏳ {scoringProgress.pending} pending</span>
-            <span className={styles.progressFailed}>✗ {scoringProgress.failed} failed</span>
-            <span className={styles.progressPending}>⊘ {scoringProgress.skipped} skipped</span>
-            <span className={styles.progressTotal}>Total: {scoringProgress.total}</span>
-          </div>
+        {/* Right: Progress Circles */}
+        <div className={styles.progressCircles}>
+          {/* LinkedIn Enrichment Progress */}
+          {progress && progress.total > 0 && (
+            <div className={styles.progressWrapper}>
+              <h3 className={styles.progressTitle}>LinkedIn Enrichment</h3>
+              <div className={styles.progressGroup}>
+                <CircularProgress
+                  value={progress.completed}
+                  max={progress.total}
+                  size={140}
+                  strokeWidth={10}
+                  color="#8b5cf6"
+                />
+                <div className={styles.progressStats}>
+                  <span className={styles.statItem}>
+                    <span className={styles.statIcon}>✓</span> {progress.completed} completed
+                  </span>
+                  <span className={styles.statItem}>
+                    <span className={styles.statIcon}>⏳</span> {progress.pending} pending
+                  </span>
+                  <span className={styles.statItem}>
+                    <span className={styles.statIcon}>✗</span> {progress.failed} failed
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* AI Scoring Progress */}
+          {scoringProgress && scoringProgress.total > 0 && (
+            <div className={styles.progressWrapper}>
+              <h3 className={styles.progressTitle}>AI Scoring</h3>
+              <div className={styles.progressGroup}>
+                <CircularProgress
+                  value={scoringProgress.completed}
+                  max={scoringProgress.total}
+                  size={140}
+                  strokeWidth={10}
+                  color="#a78bfa"
+                />
+                <div className={styles.progressStats}>
+                  <span className={styles.statItem}>
+                    <span className={styles.statIcon}>✓</span> {scoringProgress.completed} scored
+                  </span>
+                  <span className={styles.statItem}>
+                    <span className={styles.statIcon}>⏳</span> {scoringProgress.pending} pending
+                  </span>
+                  <span className={styles.statItem}>
+                    <span className={styles.statIcon}>✗</span> {scoringProgress.failed} failed
+                  </span>
+                  <span className={styles.statItem}>
+                    <span className={styles.statIcon}>⊘</span> {scoringProgress.skipped} skipped
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       {!hasData ? (
-        <div className={styles.noData}>
+        <motion.div
+          className={styles.noData}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <h2>No attendee data yet</h2>
           <p>Use the Chrome extension on a Luma event page to analyze attendees.</p>
           <p>The data will appear here automatically.</p>
-        </div>
+        </motion.div>
       ) : (
         <>
           <div className={styles.summary}>
@@ -345,37 +427,62 @@ export default function Dashboard() {
               <p>Total Attendees: <strong>{attendees.length}</strong></p>
             </div>
             <div className={styles.actions}>
-              <button
+              <motion.button
                 onClick={() => setShowCameraModal(true)}
-                className={styles.faceMatchBtn}
+                className={styles.iconBtn}
                 disabled={faceMatchLoading}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                title="Find by Face"
               >
-                {faceMatchLoading ? '🔍 Matching...' : '📷 Find by Face'}
-              </button>
-              <button onClick={downloadCSV} className={styles.downloadBtn}>
-                Download CSV
-              </button>
+                <Camera size={20} />
+              </motion.button>
+              <motion.button
+                onClick={downloadCSV}
+                className={styles.iconBtn}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                title="Download CSV"
+              >
+                <Download size={20} />
+              </motion.button>
             </div>
           </div>
 
           {/* Face Match Error */}
-          {faceMatchError && (
-            <div className={styles.faceMatchError}>
-              <strong>Face Match Error:</strong> {faceMatchError}
-              <button onClick={() => setFaceMatchError(null)} className={styles.dismissBtn}>✕</button>
-            </div>
-          )}
+          <AnimatePresence>
+            {faceMatchError && (
+              <motion.div
+                className={styles.faceMatchError}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <strong>Face Match Error:</strong> {faceMatchError}
+                <button onClick={() => setFaceMatchError(null)} className={styles.dismissBtn}>✕</button>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Face Match Loading */}
-          {faceMatchLoading && (
-            <div className={styles.faceMatchLoading}>
-              <div className={styles.spinner}></div>
-              <p>Analyzing face and matching with attendees...</p>
-            </div>
-          )}
+          <AnimatePresence>
+            {faceMatchLoading && (
+              <motion.div
+                className={styles.faceMatchLoading}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className={styles.spinner}></div>
+                <p>Analyzing face and matching with attendees...</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <div className={styles.tableContainer}>
-            <table className={styles.table}>
+            <table className={styles.table} ref={tableRef}>
               <thead>
                 <tr>
                   <th>Expand</th>
@@ -383,33 +490,36 @@ export default function Dashboard() {
                   <th>Name</th>
                   <th>Headline</th>
                   <th>Events</th>
-                  <th>LinkedIn</th>
-                  <th>Status</th>
-                  <th>Overall Score</th>
+                  <th>Score</th>
                   <th>Hackathons Won</th>
                   <th>Tech Summary</th>
                   <th>Collab Summary</th>
                   <th>Summary</th>
+                  <th>Status</th>
                   <th>Socials</th>
                 </tr>
               </thead>
               <tbody>
                 {attendees.map((attendee, index) => (
                   <>
-                    <tr
+                    <motion.tr
                       key={index}
                       ref={matchedRowIndex === index ? matchedRowRef : null}
-                      className={`${expandedRows.has(index) ? styles.expanded : ''} ${
-                        matchedRowIndex === index ? styles.matchedRow : ''
-                      }`}
+                      className={matchedRowIndex === index ? styles.matchedRow : ''}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: index * 0.02 }}
                     >
                       <td>
-                        <button
-                          onClick={() => toggleRow(index)}
+                        <motion.button
+                          onClick={() => openDetailsModal(attendee)}
                           className={styles.expandBtn}
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                          title="View full details"
                         >
-                          {expandedRows.has(index) ? '▼' : '▶'}
-                        </button>
+                          <Eye size={18} />
+                        </motion.button>
                       </td>
                       <td>
                         {attendee.linkedinData?.profile_photo ? (
@@ -437,28 +547,9 @@ export default function Dashboard() {
                         )}
                       </td>
                       <td>{attendee.eventsAttended || 0}</td>
-                      <td>
-                        {attendee.linkedin ? (
-                          <a href={attendee.linkedin} target="_blank" rel="noopener noreferrer">
-                            View
-                          </a>
-                        ) : '-'}
-                      </td>
-                      <td>
-                        <span className={`${styles.status} ${styles[attendee.scrapingStatus || 'no_linkedin']}`}>
-                          {attendee.scrapingStatus === 'pending' && '⏳ Scraping...'}
-                          {attendee.scrapingStatus === 'completed' && '✓ Done'}
-                          {attendee.scrapingStatus === 'failed' && '✗ Failed'}
-                          {attendee.scrapingStatus === 'no_linkedin' && '-'}
-                        </span>
-                        {attendee.scrapingError && (
-                          <div className={styles.error}>{attendee.scrapingError}</div>
-                        )}
-                      </td>
-                      {/* Scoring columns */}
                       <td className={styles.scoreCell}>
                         {attendee.overall_score !== null && attendee.overall_score !== undefined ? (
-                          <span className={styles.scoreValue}>{attendee.overall_score}/100</span>
+                          <span className={styles.scoreValue}>{attendee.overall_score}</span>
                         ) : attendee.scoringStatus === 'pending' ? (
                           <span className={styles.loading}>...</span>
                         ) : '-'}
@@ -469,112 +560,57 @@ export default function Dashboard() {
                           : '-'}
                       </td>
                       <td className={styles.summaryCell}>
-                        {attendee.technical_skill_summary || '-'}
+                        {attendee.technical_skill_summary || (
+                          attendee.scoringStatus === 'pending' ? (
+                            <span className={styles.loading}>...</span>
+                          ) : '-'
+                        )}
                       </td>
                       <td className={styles.summaryCell}>
-                        {attendee.collaboration_summary || '-'}
+                        {attendee.collaboration_summary || (
+                          attendee.scoringStatus === 'pending' ? (
+                            <span className={styles.loading}>...</span>
+                          ) : '-'
+                        )}
                       </td>
                       <td className={styles.summaryCell}>
-                        {attendee.summary || '-'}
+                        {attendee.summary || (
+                          attendee.scoringStatus === 'pending' ? (
+                            <span className={styles.loading}>...</span>
+                          ) : '-'
+                        )}
+                      </td>
+                      <td>
+                        <span className={`${styles.status} ${styles[attendee.scrapingStatus || 'no_linkedin']}`}>
+                          {attendee.scrapingStatus === 'pending' && '⏳'}
+                          {attendee.scrapingStatus === 'completed' && '✓'}
+                          {attendee.scrapingStatus === 'failed' && '✗'}
+                          {attendee.scrapingStatus === 'no_linkedin' && '-'}
+                        </span>
                       </td>
                       <td className={styles.socials}>
-                        {attendee.instagram && <a href={attendee.instagram} target="_blank" rel="noopener noreferrer">IG</a>}
-                        {attendee.x && <a href={attendee.x} target="_blank" rel="noopener noreferrer">X</a>}
-                        {attendee.tiktok && <a href={attendee.tiktok} target="_blank" rel="noopener noreferrer">TT</a>}
-                        {attendee.website && <a href={attendee.website} target="_blank" rel="noopener noreferrer">Web</a>}
+                        {attendee.linkedin && (
+                          <a href={attendee.linkedin} target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                            <Linkedin size={16} />
+                          </a>
+                        )}
+                        {attendee.instagram && (
+                          <a href={attendee.instagram} target="_blank" rel="noopener noreferrer" title="Instagram">
+                            <Instagram size={16} />
+                          </a>
+                        )}
+                        {attendee.x && (
+                          <a href={attendee.x} target="_blank" rel="noopener noreferrer" title="X (Twitter)">
+                            <Twitter size={16} />
+                          </a>
+                        )}
+                        {attendee.website && (
+                          <a href={attendee.website} target="_blank" rel="noopener noreferrer" title="Website">
+                            <Globe size={16} />
+                          </a>
+                        )}
                       </td>
-                    </tr>
-
-                    {/* Expanded Row Details */}
-                    {expandedRows.has(index) && attendee.linkedinData && (
-                      <tr key={`${index}-expanded`} className={styles.expandedContent}>
-                        <td colSpan={13}>
-                          <div className={styles.detailsContainer}>
-                            {/* About */}
-                            {attendee.linkedinData.about && (
-                              <div className={styles.detailSection}>
-                                <h4>About</h4>
-                                <p>{attendee.linkedinData.about}</p>
-                              </div>
-                            )}
-
-                            {/* Experience */}
-                            {attendee.linkedinData.experience && attendee.linkedinData.experience.length > 0 && (
-                              <div className={styles.detailSection}>
-                                <h4>Experience ({attendee.linkedinData.experience.length})</h4>
-                                {attendee.linkedinData.experience.slice(0, 3).map((exp, i) => (
-                                  <div key={i} className={styles.experienceItem}>
-                                    <strong>{exp.position}</strong> at {exp.company_name}
-                                    <br />
-                                    <span className={styles.meta}>{exp.duration} • {exp.location}</span>
-                                  </div>
-                                ))}
-                                {attendee.linkedinData.experience.length > 3 && (
-                                  <p className={styles.more}>+ {attendee.linkedinData.experience.length - 3} more</p>
-                                )}
-                              </div>
-                            )}
-
-                            {/* Education */}
-                            {attendee.linkedinData.education && attendee.linkedinData.education.length > 0 && (
-                              <div className={styles.detailSection}>
-                                <h4>Education</h4>
-                                {attendee.linkedinData.education.map((edu, i) => (
-                                  <div key={i} className={styles.educationItem}>
-                                    <strong>{edu.college_name}</strong>
-                                    {edu.college_degree && <span> - {edu.college_degree}</span>}
-                                    {edu.college_degree_field && <span> ({edu.college_degree_field})</span>}
-                                    <br />
-                                    <span className={styles.meta}>{edu.college_duration}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-
-                            {/* Certifications */}
-                            {attendee.linkedinData.certification && attendee.linkedinData.certification.length > 0 && (
-                              <div className={styles.detailSection}>
-                                <h4>Certifications ({attendee.linkedinData.certification.length})</h4>
-                                {attendee.linkedinData.certification.slice(0, 3).map((cert, i) => (
-                                  <div key={i} className={styles.certificationItem}>
-                                    <strong>{cert.certification}</strong>
-                                    <br />
-                                    <span className={styles.meta}>{cert.company_name} • {cert.issue_date}</span>
-                                  </div>
-                                ))}
-                                {attendee.linkedinData.certification.length > 3 && (
-                                  <p className={styles.more}>+ {attendee.linkedinData.certification.length - 3} more</p>
-                                )}
-                              </div>
-                            )}
-
-                            {/* Activities - Show only "Shared by" activities */}
-                            {attendee.linkedinData.activities && attendee.linkedinData.activities.length > 0 && (() => {
-                              const sharedActivities = attendee.linkedinData.activities.filter(
-                                activity => activity.activity && activity.activity.startsWith('Shared by')
-                              );
-
-                              if (sharedActivities.length === 0) return null;
-
-                              return (
-                                <div className={styles.detailSection}>
-                                  <h4>Recent Activity - Shared Posts ({sharedActivities.length} total)</h4>
-                                  {sharedActivities.map((activity, i) => (
-                                    <div key={i} className={styles.activityItem}>
-                                      <a href={activity.link} target="_blank" rel="noopener noreferrer">
-                                        {activity.title}
-                                      </a>
-                                      <br />
-                                      <span className={styles.meta}>{activity.activity}</span>
-                                    </div>
-                                  ))}
-                                </div>
-                              );
-                            })()}
-                          </div>
-                        </td>
-                      </tr>
-                    )}
+                    </motion.tr>
                   </>
                 ))}
               </tbody>
@@ -582,6 +618,13 @@ export default function Dashboard() {
           </div>
         </>
       )}
+
+      {/* Attendee Details Modal */}
+      <AttendeeDetailsModal
+        isOpen={showDetailsModal}
+        onClose={closeDetailsModal}
+        attendee={selectedAttendee}
+      />
 
       {/* Camera Modal */}
       <CameraModal
@@ -595,7 +638,7 @@ export default function Dashboard() {
         isOpen={showMatchResult}
         onClose={() => {
           setShowMatchResult(false);
-          setMatchedRowIndex(null); // Clear highlight when closing
+          setMatchedRowIndex(null);
         }}
         matchData={matchData}
       />

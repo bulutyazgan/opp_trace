@@ -1,65 +1,214 @@
-/* Styles for Luma Attendee Analyzer Button */
+/* Styles for LumedIn Analyzer Widget - Purple Theme */
+
+/* Widget Container */
+.luma-analyzer-widget {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Toggle Button (Collapsed State) */
+.luma-analyzer-toggle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.luma-analyzer-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(139, 92, 246, 0.4), 0 0 0 1px rgba(139, 92, 246, 0.3);
+}
+
+.luma-analyzer-toggle.hidden {
+  display: none;
+}
+
+/* Expanded Panel */
+.luma-analyzer-panel {
+  background: rgba(18, 18, 18, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 220px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  animation: slideIn 0.3s ease-out;
+}
+
+.luma-analyzer-panel.hidden {
+  display: none;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Panel Header */
+.luma-analyzer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.luma-analyzer-header span {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  background: linear-gradient(135deg, #ffffff 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Close Button */
+.luma-analyzer-close {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: all 0.2s;
+  border-radius: 4px;
+}
+
+.luma-analyzer-close:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Rainbow Button Animation */
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
 
 .luma-analyzer-btn {
-  /* Base styling */
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    #a97cf8 0%,
+    #9c40ff 25%,
+    #8c1eff 50%,
+    #a855f7 75%,
+    #c084fc 100%
+  );
+  background-size: 200% 100%;
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 12px 24px;
-  font-size: 14px;
+  padding: 10px 16px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-
-  /* Ensure button is visible */
+  box-shadow: 0 4px 16px rgba(168, 85, 247, 0.4);
   position: relative;
-  z-index: 1000;
-  display: inline-block;
+  overflow: hidden;
+  animation: rainbow 3s ease infinite;
+}
+
+.luma-analyzer-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
 }
 
 .luma-analyzer-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  background: linear-gradient(135deg, #5a6fd8 0%, #6a3f92 100%);
+  box-shadow: 0 6px 24px rgba(168, 85, 247, 0.6);
+}
+
+.luma-analyzer-btn:hover:not(:disabled)::before {
+  animation: shine 0.6s;
 }
 
 .luma-analyzer-btn:active:not(:disabled) {
   transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .luma-analyzer-btn:disabled {
-  opacity: 0.6;
+  opacity: 1;
   cursor: not-allowed;
-  background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+  background: #000000;
+  animation: none;
+  color: #ffffff;
 }
 
-/* Animation for when analyzing */
-.luma-analyzer-btn:disabled::after {
-  content: "";
-  display: inline-block;
-  margin-left: 8px;
-  width: 12px;
-  height: 12px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+.luma-analyzer-btn:disabled::before {
+  display: none;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+  .luma-analyzer-widget {
+    top: 16px;
+    right: 16px;
+  }
+
+  .luma-analyzer-toggle {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+
+  .luma-analyzer-panel {
+    min-width: 200px;
+    padding: 14px;
+  }
+
   .luma-analyzer-btn {
-    padding: 10px 20px;
-    font-size: 13px;
+    padding: 9px 14px;
+    font-size: 12px;
   }
 }
