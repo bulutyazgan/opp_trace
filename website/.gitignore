@@ -25,12 +25,6 @@ yarn-error.log*
 # Local env files
 .env*.local
 
-# Temp directory
-/temp/*
-!/temp/linkedin_cache/
-/temp/linkedin_cache/*
-!/temp/linkedin_cache/.gitkeep
-
 # Vercel
 .vercel
 
