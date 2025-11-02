@@ -432,6 +432,20 @@
   line-height: 1.5;
 }
 
+/* LinkedIn Icon */
+.linkedinIcon {
+  color: #0077b5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.linkedinIcon:hover {
+  color: #00a0dc;
+  transform: scale(1.1);
+}
+
 /* Socials */
 .socials {
   display: flex;
@@ -470,6 +484,39 @@
   background: rgba(10, 10, 10, 0.5);
   border-radius: 8px;
   margin: 0.5rem;
+}
+
+/* AI Summaries Section */
+.summariesSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid rgba(133, 35, 204, 0.3);
+}
+
+.summaryBox {
+  background: rgba(133, 35, 204, 0.1);
+  border: 1px solid rgba(133, 35, 204, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.summaryBox h4 {
+  color: #a78bfa;
+  margin: 0 0 0.75rem 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.summaryBox p {
+  color: #d1d5db;
+  line-height: 1.5;
+  margin: 0;
+  font-size: 0.9rem;
 }
 
 .detailSection {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { Camera, Download } from 'lucide-react';
+import { Camera, Download, Linkedin } from 'lucide-react';
 import Image from 'next/image';
 import styles from './page.module.css';
 import CameraModal from '@/components/CameraModal';
@@ -399,9 +399,6 @@ export default function Dashboard() {
                   <th>Status</th>
                   <th>Overall Score</th>
                   <th>Hackathons Won</th>
-                  <th>Tech Summary</th>
-                  <th>Collab Summary</th>
-                  <th>Summary</th>
                   <th>Socials</th>
                 </tr>
               </thead>
@@ -451,8 +448,8 @@ export default function Dashboard() {
                       <td>{attendee.eventsAttended || 0}</td>
                       <td>
                         {attendee.linkedin ? (
-                          <a href={attendee.linkedin} target="_blank" rel="noopener noreferrer">
-                            View
+                          <a href={attendee.linkedin} target="_blank" rel="noopener noreferrer" className={styles.linkedinIcon}>
+                            <Linkedin size={18} />
                           </a>
                         ) : '-'}
                       </td>
@@ -480,15 +477,6 @@ export default function Dashboard() {
                           ? attendee.hackathons_won
                           : '-'}
                       </td>
-                      <td className={styles.summaryCell}>
-                        {attendee.technical_skill_summary || '-'}
-                      </td>
-                      <td className={styles.summaryCell}>
-                        {attendee.collaboration_summary || '-'}
-                      </td>
-                      <td className={styles.summaryCell}>
-                        {attendee.summary || '-'}
-                      </td>
                       <td className={styles.socials}>
                         {attendee.instagram && <a href={attendee.instagram} target="_blank" rel="noopener noreferrer">IG</a>}
                         {attendee.x && <a href={attendee.x} target="_blank" rel="noopener noreferrer">X</a>}
@@ -498,12 +486,34 @@ export default function Dashboard() {
                     </tr>
 
                     {/* Expanded Row Details */}
-                    {expandedRows.has(index) && attendee.linkedinData && (
+                    {expandedRows.has(index) && (
                       <tr key={`${index}-expanded`} className={styles.expandedContent}>
-                        <td colSpan={13}>
+                        <td colSpan={10}>
                           <div className={styles.detailsContainer}>
+                            {/* AI Summaries Section */}
+                            <div className={styles.summariesSection}>
+                              {attendee.technical_skill_summary && (
+                                <div className={styles.summaryBox}>
+                                  <h4>Technical Skills</h4>
+                                  <p>{attendee.technical_skill_summary}</p>
+                                </div>
+                              )}
+                              {attendee.collaboration_summary && (
+                                <div className={styles.summaryBox}>
+                                  <h4>Collaboration</h4>
+                                  <p>{attendee.collaboration_summary}</p>
+                                </div>
+                              )}
+                              {attendee.summary && (
+                                <div className={styles.summaryBox}>
+                                  <h4>Overall Summary</h4>
+                                  <p>{attendee.summary}</p>
+                                </div>
+                              )}
+                            </div>
+
                             {/* About */}
-                            {attendee.linkedinData.about && (
+                            {attendee.linkedinData?.about && (
                               <div className={styles.detailSection}>
                                 <h4>About</h4>
                                 <p>{attendee.linkedinData.about}</p>
