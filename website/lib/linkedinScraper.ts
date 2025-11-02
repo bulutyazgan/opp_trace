@@ -88,7 +88,7 @@ export async function scrapeLinkedInProfile(
         api_key: apiKey,
         type: 'profile',
         id: url,
-        premium: 'false',
+        premium: 'true',
       },
       timeout: 30000, // 30 second timeout
     });
