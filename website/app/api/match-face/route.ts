@@ -161,11 +161,11 @@ function runPythonFaceRecognition(
       reject(new Error('Failed to run face recognition: ' + error.message));
     });
 
-    // Set timeout (90 seconds - increased to allow for image downloads)
+    // Set timeout (200 seconds - increased to allow for image downloads)
     setTimeout(() => {
       pythonProcess.kill();
-      reject(new Error('Face recognition timeout - processing took longer than 90 seconds'));
-    }, 90000);
+      reject(new Error('Face recognition timeout - processing took longer than 200 seconds'));
+    }, 20000000);
   });
 }
 
