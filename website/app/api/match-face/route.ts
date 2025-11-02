@@ -135,11 +135,23 @@ function runPythonFaceRecognition(
 
       try {
         // Parse JSON output from Python script
-        const result: MatchFaceResponse = JSON.parse(stdout);
+        // Clean up stdout: trim whitespace and extract JSON (handle potential extra output)
+        let jsonString = stdout.trim();
+
+        // If there's extra output, try to find the JSON object
+        const jsonStart = jsonString.indexOf('{');
+        const jsonEnd = jsonString.lastIndexOf('}');
+
+        if (jsonStart !== -1 && jsonEnd !== -1 && jsonEnd > jsonStart) {
+          jsonString = jsonString.substring(jsonStart, jsonEnd + 1);
+        }
+
+        const result: MatchFaceResponse = JSON.parse(jsonString);
         resolve(result);
       } catch (parseError) {
         console.error('Failed to parse Python output:', stdout);
         console.error('Python stderr:', stderr);
+        console.error('Parse error details:', parseError);
         reject(new Error('Failed to parse face recognition results'));
       }
     });
