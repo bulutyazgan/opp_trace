@@ -349,11 +349,12 @@ export default function Dashboard() {
                 onClick={() => setShowCameraModal(true)}
                 className={styles.faceMatchBtn}
                 disabled={faceMatchLoading}
+                title="Find by Face"
               >
-                {faceMatchLoading ? '🔍 Matching...' : '📷 Find by Face'}
+                📷
               </button>
-              <button onClick={downloadCSV} className={styles.downloadBtn}>
-                Download CSV
+              <button onClick={downloadCSV} className={styles.downloadBtn} title="Download CSV">
+                ⬇️
               </button>
             </div>
           </div>

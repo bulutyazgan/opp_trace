@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Luma Attendee Analyzer",
-  "version": "1.0.0",
-  "description": "Analyze Luma event attendees and send to dashboard",
+  "name": "LumedIn Analyzer",
+  "version": "1.0.3",
+  "description": "AI-powered event attendee analysis and networking insights for Luma events",
   "permissions": [
     "activeTab"
   ],
@@ -22,6 +22,8 @@
     }
   ],
   "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
     "128": "icon128.png"
   }
 }
