@@ -66,36 +66,23 @@ export async function scrapeLinkedInProfile(
     };
   }
 
-  // Check if cache mode is enabled
-  const useCacheMode = process.env.USE_LINKEDIN_CACHE === 'true';
+  // Always check cache first for this specific profile
+  console.log(`🔍 Checking cache for: ${url}`);
+  const cached = readFromCache(url);
 
-  // Try to read from cache first
-  if (useCacheMode) {
-    console.log(`🔍 Cache mode ON - checking cache for: ${url}`);
-    const cached = readFromCache(url);
-
-    if (cached) {
-      // Cache hit - return cached data
-      console.log(`✅ Using cached data for: ${url}`);
-      return {
-        url,
-        success: true,
-        data: cached.profile,
-      };
-    }
-
-    // Cache miss - skip API call in cache mode
-    console.log(`⚠️  Cache miss - skipping API call for: ${url}`);
+  if (cached) {
+    // Cache hit - return cached data
+    console.log(`✅ Using cached data for: ${url}`);
     return {
       url,
-      success: false,
-      error: 'No cached data available (cache mode enabled)',
+      success: true,
+      data: cached.profile,
     };
   }
 
-  // Cache mode OFF - make API call as normal
+  // Cache miss - scrape from API and cache the result
   try {
-    console.log(`🌐 Live mode - scraping: ${url}`);
+    console.log(`🌐 Cache miss - scraping from API: ${url}`);
     const response = await axios.get('https://api.scrapingdog.com/profile', {
       params: {
         api_key: apiKey,
