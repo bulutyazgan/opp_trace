@@ -38,11 +38,13 @@ export default function MatchResult({ isOpen, onClose, matchData }: MatchResultP
         </div>
 
         <div className={styles.modalBody}>
-          {/* Confidence Score */}
+          {/* Confidence Score - Only show for non-verified matches */}
           <div className={styles.confidenceSection}>
-            <div className={styles.confidenceBadge} style={{ background: getConfidenceColor(confidence) }}>
-              {confidencePercent}% Match
-            </div>
+            {!verified && (
+              <div className={styles.confidenceBadge} style={{ background: getConfidenceColor(confidence) }}>
+                {confidencePercent}% Match
+              </div>
+            )}
             <p className={styles.verifiedText}>
               {verified ? '✓ Verified Match' : 'Possible Match'}
             </p>

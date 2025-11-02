@@ -526,15 +526,7 @@ export default function Dashboard() {
                   <th>Overall Score</th>
                   <th>Hackathons Won</th>
                   <th>Socials</th>
-                  <th>
-                    <input
-                      type="checkbox"
-                      checked={selectedAttendees.size === attendees.length && attendees.length > 0}
-                      onChange={toggleSelectAll}
-                      title="Select All"
-                      className={styles.selectCheckbox}
-                    />
-                  </th>
+                  <th>Select</th>
                 </tr>
               </thead>
               <tbody>
