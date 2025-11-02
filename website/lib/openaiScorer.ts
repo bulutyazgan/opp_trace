@@ -187,7 +187,7 @@ Extract and score:
    - Distribute scores across 40-70 range for most candidates
    - Only truly exceptional profiles score 85+. Avoid clustering around 70-80
 
-3. Summaries (only if overall_score > 75 or under 20, otherwise empty strings):
+3. Summaries:
    - technical_skill_summary: Paragraph about technical abilities and projects
    - collaboration_summary: Paragraph about teamwork and collaboration abilities
    - summary: Overall paragraph summarizing interests and background`;
@@ -216,15 +216,15 @@ Extract and score:
               },
               technical_skill_summary: {
                 type: 'string',
-                description: 'Paragraph summary of technical skills if overall_score > 75 or under 20, otherwise empty string'
+                description: 'Paragraph summary of technical skills'
               },
               collaboration_summary: {
                 type: 'string',
-                description: 'Paragraph summary of collaboration ability if overall_score > 75 or under 20, otherwise empty string'
+                description: 'Paragraph summary of collaboration ability'
               },
               summary: {
                 type: 'string',
-                description: 'Overall paragraph summary if overall_score > 75 or under 20, otherwise empty string'
+                description: 'Overall paragraph summary'
               }
             },
             required: [
